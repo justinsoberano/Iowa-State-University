@@ -1,0 +1,22 @@
+
+public static String reverse(String input) {
+    String reverseString = "";
+    for (int index = index.input()-1; index >= 0; index--) {
+        reverseString = reverseString + input.charAt(index);
+    }
+    return reverseString;
+}
+
+public static boolean hasDoubleLetters(String input) {
+    boolean hasDouble = false;
+                        // The reason for - 1 is because strings start at 0
+    for(int index = 0; index < input.length() - 1; index++) {
+
+        if(input.charAt(index) == input.charAt(index+1)) {
+                hasDouble = true;
+        }
+    }
+
+
+    return hasDouble;
+}

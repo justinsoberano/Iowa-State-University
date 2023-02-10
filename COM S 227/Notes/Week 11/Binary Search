@@ -1,0 +1,36 @@
+package mergesort;
+
+public class Search {
+
+    public static boolean contains(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] == target) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int binarySearch(int[] arr, int target, int start, int end) {
+
+        int mid = (end + start) / 2;
+        //base case
+        if (start > end) {
+                return -1;
+            }
+
+        //recursion
+        if(arr[mid] == target) {
+            return mid;
+        } else if (target < arr[mid]) {
+            return binarySearch(arr, target, start, mid - 1);
+        } else {
+            return binarySearch(arr, target, mid + 1, end);
+        }
+    }
+
+    public static void main(String args[]) {
+
+    }
+
+}

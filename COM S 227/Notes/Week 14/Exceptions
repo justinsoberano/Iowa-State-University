@@ -1,0 +1,49 @@
+package exceptions2;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class ExceptionExamples {
+
+    public static double getAverageFromFile(File file) throws FileNotFoundException {
+        File file = new File("in.txt");
+        int total = 0;
+        int count = 0;
+
+        try {
+            Scanner scnr = new Scanner(file);
+            while (scnr.hasNext()) {
+                int num = scnr.next();
+                total += num;
+                count++;
+            }
+        return total/count;
+    }
+
+    public static double getAverage() {
+        File file = new file("in.txt");
+        return getAverageFromFile(file);
+    }
+
+    public static void main(String args[]) throws FileNotFoundException {
+        int total = 0;
+        int count = 0;
+        double avg = 0;
+
+        try {
+            avg = getAverage();
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        } catch (FileNotFoundException e) {
+            System.out.println("The file does not exist.");
+            // e.printStackTrace(); <= this prints out the red error code
+        } catch (InputMismatchException e) {
+            System.out.println("The file contains invalid numbers.")
+        }
+
+        System.out.println("The average is " + avg);
+
+    }
+}

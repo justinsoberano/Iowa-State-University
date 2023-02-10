@@ -1,0 +1,86 @@
+import java.util.ArrayList;
+
+public class MidtermReview {
+
+    public static String reverse(String s) { // Reversing a String
+
+        String result = "";
+
+        for(int i = s.length() - 1; i >= 0; i--) {
+            result += s.charAt(i)
+        }
+        return result;
+    }
+
+    /**
+     * "aaaabbbb"
+     * "bbbbaaaa"
+     */
+    public static String swapFirstWithSecond(String s) {
+        
+        String result = "";
+        int midPoint = s.length() / 2;
+
+        result = s.substring(mid) + s.substring(0, mid);
+
+        s.substring(0,1); // will result in a char.
+
+        return result;
+    }
+
+
+
+
+    public static void main(String args[]) { // Comfortable with ArrayLists
+
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<String> names = new ArrayList<String>();
+
+        String input = "12 34 45 56 67 78"
+        Scanner scnr = new Scanner(System.in);
+
+        while(scnr.hasNextInt()) {
+            int value = scnr.nextInt();
+            list.add(value);
+        }
+
+        names.add("Bob");
+        names.add("Jim");
+
+        if(names.contains("Jim")) {
+            System.out.println("Jim is on the list");
+        }
+
+        if (list.contains(45)) {
+            System.out.println("It has 45.")
+        }
+
+    }
+}
+
+
+int num = parseInt("43"); // converts into an int
+
+File myFile = new File("example.txt"); //opens file
+
+File myFile = new File(".") // returns an array of all the files in the directory
+if (myFile.isDirectory()) {
+    File[] file = myFile.listFiles();
+    for (File f : files) {
+        Scanner scnr = new Scanner(f); // to read a file make a for statement and then put it inside of a scanner
+        scnr.hasNextLine();
+        String line = scnr.nextLine();
+        Scanner scnr3 = new Scanner(line);
+    }
+}
+
+
+public static int foo(int n) { // this returns 9
+    if (n == 0) {
+        return 5;
+    }
+    return foo(n-1) + 1;
+}
+
+
+

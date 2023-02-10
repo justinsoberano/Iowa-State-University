@@ -1,0 +1,61 @@
+package objects;
+
+public class Square {
+    public static double getArea(double length) {
+        
+        double value;
+        value = length * length;
+
+        return value;
+
+        // Everything can be sinplified down to
+        return Math.pow(length, 2);
+    }
+}
+
+// How to test code
+
+// It is good practice to test code in a new class instead of the same class in order to keep everything the same
+
+/* NEW FILE */
+
+package objects;
+
+public class SquareTest {
+    public static void main(String args[]) {
+        double area = square.getArea(10); // Calling a class: FileName.methodName(arguments)
+        System.out.println("100");
+    }
+}
+
+/* NEW FILE */
+
+// Introduction to objects
+
+package objects;
+
+public class StringExamples {
+    public static void main(String args[]) {
+        String noName = "";
+        String bobsName = "Bob";
+        String greeting = "Hello, World";
+        
+        // How to call a method with respect to the object
+        bobsName.length();
+
+        System.out.println("No name is length " + noName.length()); // returns 0
+        System.out.println("Bobs name is length " + bobsName.length()); // returns 3
+
+        bobsName.charAt(0); // returns letter 'B'
+        bobsName.charAt(2); // returns letter 'b'
+
+        bobsName.toUpperCase(); // will make the whole name uppercase
+        bobsName.indexOf('o') // retuern the index of 'o'
+
+        greeting.substring(0,7) // will print out 'Hello, ' * The last number is not inclusive but up to index location 7
+
+        greeting.substring(0, greeting.indexOf('W')) // the index of W is 7, so it will do the same thing
+
+
+    }
+}

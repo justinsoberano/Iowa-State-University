@@ -1,0 +1,60 @@
+public class NestedLoop {
+    
+    // CHECKS FOR DUPLICATES IN TEXT
+    public static boolean hasDuplicates(String text) {
+        boolean duplicate = false;
+        
+        outerLoop:
+        for(int i  = 0; j < text.length() - 1; i++) {
+            for(int j = i + 1; j<text.length(); j++) {
+                if(text.charAt(i) == text.charAt(j)) {
+                    duplicate = true;
+                    break outerLoop;
+                }   
+            }
+        }
+
+        return false;
+    }
+
+    // Find a substring in a bigger string
+    public static int findsSubStr(String text, String sub) {
+        int found = -1;
+
+        for(int start = 0; start < text.length(); start++) {
+            boolean allMatch = true;
+            for(int j  = start; j < start + sub.length; j++) {
+                if(text.charAt(start + j) != sub.charAt(j)) {
+                    allMatch = false;
+                }
+            }
+            if (allMatch) {
+                found = start;
+                break;
+            }
+        }
+        return found;
+    }
+    public static boolean hasDuplicates(String text) {
+        for(int i  = 0; j < text.length() - 1; i++) {
+            for(int j = i + 1; j<text.length(); j++) {
+                if(text.charAt(i) == text.charAt(j)) {
+                    duplicate = true;
+                    break;
+                }   
+            }
+        }
+        return duplicate;
+    }
+    
+    
+    
+    // NESTED LOOP
+    public static void main(String args[]) {
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; i < 10; j++) {
+                System.out.println(i+j); //prints out 00 - 99
+            }
+        }
+    }
+}

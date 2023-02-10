@@ -1,0 +1,14 @@
+
+
+
+
+
+/* NEW FILE */
+public class GasCar extends Car {
+    private Tank tank;
+}
+/* NEW FILE */
+
+/* NEW FILE */
+
+

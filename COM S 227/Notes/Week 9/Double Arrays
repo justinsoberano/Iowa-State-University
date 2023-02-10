@@ -1,0 +1,69 @@
+public class ArrayExamples {
+    piblic static void main(String args[]) {
+        int[][] arr = new int [2][4];
+
+        arr[0][1] = 5;
+
+        int numRows = arr.length;
+        int numCols = arr[0].length;
+
+        int[][] copyArr = Arrays.copyof(arr, arr.length);
+        copyArr[1][2] = 25;
+
+        System.out.println(copyArr[1][2]);
+        System.out.println(arr[1][2]);
+
+        copyArr[1] = new int[4]; //sets the first row as four number row
+        copyArr[1][2] = 50;
+
+        // deep copy of array
+        
+        for (int row = 0; row < arr.length; i++) {
+            for (int column = 0; column < arr.length; i++) {
+                newArr[row][column] = arr[row][column];
+            }
+        }
+
+        for (int[] row : arr) {
+            for (int[] value : row) {
+                System.out.println(value);
+            }
+        }
+
+        int[][] newArr = new int[arr.length][];
+        for (int i = 0; i <arr.length; i++) {
+            newArr2[i] = Arrays.copyOf(arr[i], arr[i].length); //you can pick out the row and change the row 
+        }
+
+        public static int findSum(int[][] arr) { // finds sum of double array
+            int sum = 0;
+
+             // For version
+            for (int row = 0; row < arr.length; row++){
+                for(int col = 0; row < arr[row].length; col++) {
+                    sum += arr[row][col]
+                }
+            }
+
+            // For each version
+            for (int[] row : arr) {
+                for(int[] value : row) {
+                    sum += value;
+                }
+            }
+
+            return sum;
+        }
+
+        public static int[] findSumOfColumns(int[][] arr) { // adds the values of the columns
+            int[] sums = arr[0].length; // this finds the columns in the index 0
+
+            int colSum = 0;
+            for (int col = 0; col < arr[0].length; col++) {
+                for (int row = 0; row< arr.length; row++) {
+                    sum[col] += arr[row][col];
+                }
+            }
+
+
+        }

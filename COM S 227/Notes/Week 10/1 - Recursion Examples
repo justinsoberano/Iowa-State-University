@@ -1,0 +1,34 @@
+package recursion;
+
+public class HowManyWays {
+
+    public int howManyWays(int n) {
+
+        if (n <= 1) {
+            return 0;
+        } else if (n == 2 || n == 3) {
+            return 1;
+        }
+        // if first step is 3
+        int howManyAfter3 = howManyWays(n - 3);
+        // if first step is 2
+        int howManyAfter2 = howManyWays(n - 2);
+        return howManyAfter2 + howManyAfter3;
+    }
+
+    public static void main(String args[]) {
+        howManyWays(5);
+    }
+
+
+    public static void move(int n, String srcPeg, Strin dstPeg, String extraPeg) {
+
+        if(n == 1) {
+            System.out.println("move from " + srcPeg + " to " dstPeg);
+            return;
+        }
+        move(n - 1, srcPeg, extraPeg, dstPeg);
+        move(1, srcPeg, dstPeg, extraPeg);
+        move(n - 1, extraPeg, dstPeg, srcpeg);
+    }
+}

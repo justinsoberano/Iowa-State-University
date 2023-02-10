@@ -1,0 +1,49 @@
+package vehicle;
+
+
+public class vehicle implements Drivable {
+    private String name;
+
+    public void setName (String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void drive(int miles) {
+
+    }
+
+    public void drive(int miles, int hours) {
+        
+    }
+
+}
+
+//  NEW FILE //
+
+public class Truck extends vehicle{
+
+
+}
+
+
+ // Interface // 
+public interface Drivable {
+
+    /**
+     * Drive given miles
+     * @param miles
+     */
+    public void drive(int miles);
+
+    /**
+     * Drive given miles and hours
+     * @param miles
+     * @param hours
+     */
+    public void drive(int miles, int hours);
+
+}

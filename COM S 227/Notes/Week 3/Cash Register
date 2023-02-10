@@ -1,0 +1,96 @@
+package cashregister;
+
+/**
+ * Simulate a cash register that can charge tax
+ * 
+ * @author justin
+ */
+public class CashRegister {
+    /**
+     * The tax rate of the register
+     */
+    private double taxRate;
+    /**
+     * 
+     */
+    private double subTotal;
+    /**
+     * 
+     */
+    private double tax;
+
+    // constructor
+    /**
+     * Create a new CashRegister with a given tax rate
+     * @param taxRate
+     */
+    public CashRegister(double taxRate) {
+        this.taxRate = taxRate;
+    }
+    /**
+     * Add the price of the item to the subtotal.
+     * Also add the item's tax to the total tax.
+     * 
+     * @param price - price of the item
+     */
+    // we want this to be public because we want the user to access it 
+    public void addItem(double price) {
+        subTotal += price;
+        tax += (price * 0.07);
+    }
+
+    /**
+     * Add the price of the item to the subtotal.
+     * 
+     * @param price - price of the item
+     */
+    // Mutator methods change something in the object, do not return anything.
+    public void addItemNonTaxable(double price) {
+
+    }
+    /**
+     * Get the subtotal (excluding tax).
+     * @return the subtotal without tax
+     */
+    public double getSubtotal() {
+        return 0; // Use dummy values for methods that require a return in order for the code to run
+    }
+    /**
+     * Get the total (including tax)
+     * @return the total price and tax
+     */
+    public double getTotal() {
+
+    }
+}
+
+/** NEW FILE **/
+
+package cashregister;
+
+public class TestCashRegister {
+    public static void main(String args[]) {
+        CashRegister reg = new CashRegister(0.07)
+
+        // new cash register should have 0 subtotal and total
+        System.out.println(reg.getSubtotal()));
+        System.out.println("Expected 0"));
+        System.out.println(reg.getTotal()));
+        System.out.println("Expected 0"));
+
+        // Amount expected for a taxable item at 10 dollars
+        reg.addItem(10);
+        System.out.println(reg.getSubtotal()));
+        System.out.println("Expected 10"));
+        System.out.println(reg.getTotal()));
+        System.out.println("Expected 10.70"));
+        
+        // Amount expected for a non taxbale item at 20 dollars
+        reg.addItemNonTaxable(10);
+        System.out.println(reg.getSubtotal()));
+        System.out.println("Expected 30"));
+        System.out.println(reg.getTotal()));
+        System.out.println("Expected 30.70"));
+    }
+    
+}

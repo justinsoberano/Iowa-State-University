@@ -1,0 +1,75 @@
+h1 {
+    font: Roboto, Helvetica, Sans-serif;
+    font-size: 16px;
+    color: #444444;
+    text-align: center;
+}
+
+.container {
+    font: Roboto, Helvetica, Sans-serif;
+    align-items: center;
+    margin: 5px;
+    font-size: 13px;
+}
+
+.offerTitle {
+    font: Roboto, Helvetica, Sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #00b3b3;
+    margin: none;
+    padding: 15px;
+}
+
+.offer {
+    font: Roboto, Helvetica, Sans-serif;
+    display: inline-block;
+    width: 400px;
+    margin: 4px;
+    text-align: center;
+    border: 1px solid #cccccc;
+}
+
+.offerContents {
+    font: Roboto, Helvetica, Sans-serif;
+    padding: 20px;
+    background-color: #fafafa;
+}
+
+table {
+    font: Roboto, Helvetica, Sans-serif;
+    width: 100%;
+    background-color: #ffffff;
+    border: none;
+}
+
+th {
+    font: Roboto, Helvetica, Sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #777777;
+    padding: 10px;
+    margin: none;
+    text-align: left;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+td {
+    font: Roboto, Helvetica, Sans-serif;
+    font-weight: lighter;
+    color: #444444;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: none;
+    text-align: left;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.finalValue {
+    font: Roboto, Helvetica, Sans-serif;
+    font-weight: bold;
+    color: #2222ff
+}

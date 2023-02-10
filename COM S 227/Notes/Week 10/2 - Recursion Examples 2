@@ -1,0 +1,73 @@
+package recursion;
+
+import java.io.File;
+import java.util.Arraylist;
+
+public class FileLister {
+
+    public static int arraySum(int arr[], int start, int end) {
+
+        if (start == end) {
+        }
+
+        int mid = (start + end ) / 2;
+        return arraySum(arr, start, mid) + arraySum(arr, mid + 1, end);
+    }
+
+    public static ArrayList<String> listPermutations(String text) {
+
+        ArrayList<String> list = new ArrayList<String>();
+
+        // base case
+
+        if(text.length() == 1) {
+            list.add(text);
+            return list;
+        } else (text.length() == 0) {
+            return list;
+        }
+
+        // recursion
+        for(int i  = 0; i < text.length; i++) {
+            Strign subText = text.substring(0,i); + text.subtring(i+1); 
+            ArrayList<String> sublist = listPermutations(subtext); // contains everything but the first letter
+            for(int j = 0; j < sublist.size(); j++) {
+                list.add(text.substring(i, i+1) + sublist.get(j));
+            }
+        }
+        return list;
+    }
+    
+    public static void listOneLevel(File d) {
+        File[] files = d.listFiles();
+        for(File f : files) {
+            System.out.println(f.getName());
+        }
+    }
+    
+    public static void listAllFiles(Files f) {
+        // base case
+        if (f.isDirectory()) {
+            makeIndent(indent);
+            System.out.println(f.getName()));
+            return;
+        }
+        // recursion
+        File[] files = f.listFiles();
+        for(File f : files) {
+            listAllFiles(subf, indent + 1);
+        }
+        System.out.println(f.getName());
+    }
+
+    public static void makeIndent(int indent) {
+        for (int i = 0; i < indent; i++) {
+            System.out.println("/t");
+        }
+    }
+
+    public static void main(String args[]) {
+
+    }
+
+}

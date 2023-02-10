@@ -1,0 +1,47 @@
+public class WhileExamples{
+    public static void main(String args[]) {
+        Scanner scnr = new Scanner(System.in);
+        String input;
+
+        System.out.println("Continue (y/n): ");
+        input = scnr.next();
+
+        while(input.equals("y")) { // Everytime the user presses Y it will continue the loop
+
+            System.out.println("Yes");
+
+            System.out.println("Continue (y/n): ");
+            input = scnr.next();
+        }
+
+        int count = 0;
+        while (count < 10) { // Loops until count reaches 10
+            System.out.println("Count is " + count);
+            count++;
+        } // Prints 0-9, not ten because it is less than, not less than or equals to
+
+        // How to create a loop
+
+        // part 1 of a loop. initialize a variable
+        int countDown = 10;
+
+        // part 2 of a loop, test a boolean expression
+        while (countDown > 0) {
+            Systen.out.println(countDown);
+            
+            // part 3 update the variable under test
+            countDown--;
+        }
+
+
+        do { // Do while loops are useful because they execute atleast once, compared to while loops.
+            // loop body
+            System.out.println("Hello");
+
+            System.out.println("Continue (y/n): ");
+            input = scnr.next();
+        } while (input.equals('y'));
+
+        
+    }
+}

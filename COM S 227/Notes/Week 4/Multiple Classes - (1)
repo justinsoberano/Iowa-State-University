@@ -1,0 +1,32 @@
+package car;
+
+public class Car {
+
+    private GasTank gasTank;
+    private double mpg;
+    private double odometer;
+    public static double milesToKm = 1.6;
+
+    public static double convertMilesToKm(doouble miles) {
+        return miles * milesToKm;
+    }
+
+    /* Constructor */
+    public Car(double mpg, int capacity) {
+        gasTank = new GasTank(capacity);
+        this.mpg = mpg;
+
+    }
+
+    public double getOdometer() {
+        return odometer;
+    }
+    
+    public double getGasGauge() {
+        return (gasTank.getLevel() / gasTank.getCapacity());
+    }
+
+    public void buyGas(int amount) {
+        gasTank.setLevel(gasTank.getCapacity());
+        // sets the gasTank level to the capacity of the gas tank which is already set.
+

@@ -1,0 +1,83 @@
+
+public class LectureNotesOne {
+    
+    // Declaring constants
+    public static final double SPEED_OF_SOUND = 761.207;
+
+    public static void main(String[] args) {
+
+        /* Declaring a variable - < Type Identifier > 
+                          Example: int number
+                                   double num */
+        int points;
+        int point_total10;
+        int _points;
+
+        // 10points      < not allowed >
+        // point-total   < not allowed >
+
+        // Use meaningful variable names and initialize variables
+        // will automatically initialize with 0 if not initialized in code
+        int pointTotal = 10;
+        int count = 10;
+        int numCans; = 10
+        int length = 10;
+        int totalSize = 10;
+
+        // Strings need to be initialized, if not will get null error
+        String name = "John";
+
+        // Expressions follow PEMDAS
+        pointTotal = pointTotal + 30 + length * 2;
+
+        // Expression above can be abbrevated 
+        pointTotal += 30 + length * 2;
+
+        // Depending on the type < int , double , float , etc. > it may not give the correct answer
+        pointTotal = 5/2 // Will print 2 instead of 2.5 because pointTotal is a int type variable
+
+        // Chuckate: Taking the first variable that is a number and printing that number; not printing remainders.
+
+        // Example where this is useful
+        
+        int eggs = 32;                                  
+        int cartons;
+        cartons = eggs / 12;
+        System.out.println("Number of cartons" + cartons);  // will print out 2
+
+        int leftover = eggs % 12;
+        System.out.println("Leftover: " + leftover); // will print 8
+
+        // There will be 2 cartons with 8 left over
+
+        // Modulo < % > : Gives the leftover number of divison.
+
+        2 % 2 = 0
+        2 % 5 = 3
+        4 % 3 = 1
+
+        // float-point arthimetic
+        double accountValue = 0;
+        double depositValue = 10.56;
+        double accountValue = 2.5;
+
+        accountValue = deposit + 20;
+
+        // If a floating point type is in an integer expression the whole expression will become double.
+        // Be aware that integer arthimetic will be used if there is no double on the right even if the left is double.
+        
+        // This will not allow you to convert from double to int
+        int amount = accountValue; // Error
+        
+        // This will allow you to convert from double to int because you are casting "forcing" the double to become an int.
+        int amount = (int)accountValue; // amount now holds the value 2.
+
+        // Constants makes your code more readable.
+        // 761.207 will make it less readible and harder for someone to look at your code.
+        double speed = 761.207 * amount;
+
+        // Constants will make the code more readable and you now know what the random number was.
+        double speed = SPEED_OF_SOUND * amount;
+
+    }
+}

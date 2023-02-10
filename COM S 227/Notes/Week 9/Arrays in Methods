@@ -1,0 +1,92 @@
+package IntList;
+
+public class IntList {
+    
+    private int[] data;
+    private int size;
+
+    public IntList() {
+        data = new int[5];
+        size = 0;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    private int getCapacity() {
+        return data.length;
+    }
+
+    public void add (int value) {
+        checkCapacity();
+
+        data[size] = value;
+        size++;
+
+    }
+
+    public int get(int index) {
+        return data[index];
+
+    }
+
+    public void set(int pos, int value) {
+        data[pos] = value;
+    }
+
+    /**
+     * removes the value in the given index and moves every other value to the left
+     */
+    public void remove(int index) {
+        for(i = index; i<data.length; i++) {
+            data[i] = data[i + 1];
+        }
+        size--;
+    }
+
+    /**
+     * inserts a value in the given index and moves every other value to the right
+     */
+    public void insert(int index, int value) {
+        checkCapacity();
+        for(int i = size; i > index; i--) {
+            data[i] = data[i -1];
+        }
+
+        data[index] = value;
+        size++;
+
+    }
+
+    /**
+     * Returns a string representation of IntList
+     */
+    public String toString() {
+        String result = "";
+        for (int i = 0; i < size; i++) {
+            if(i = size - 1) {
+                result += data[i];
+            } else {
+                result += data[i] + ", ";
+            }
+        } 
+        return result + " ]";
+    }
+
+    /**
+     * Checks the capacity of the array and doubles it if it is full
+     */
+    public void checkCapacity(int value) {
+        if (size == data.length) {
+            
+            int[] tempData = new int[getCapacity() * 2];
+            
+            for (int i = 0; i < data.length; i++) {
+                newData[i] = data[i];
+            }
+            data = newData;
+
+        }
+    }
+}

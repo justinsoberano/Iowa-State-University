@@ -1,0 +1,91 @@
+/** SEPERATE FILE FOR TESTING **/
+import static org.junit.Assert.assertEquals;
+
+public class TestGasTank {
+    private GasTank gasTank;
+
+    @Before
+    public void setup() {
+        gasTank = new GasTank(10);
+
+    }
+
+    @Test
+    public void testNewCapacity() {
+        double capacity = gasTank.getCapacity();
+        assertEquals("New gas tank with capacity 10, getCapacity() expected to return 10.",10, capacity);
+
+    }// PASSED
+
+    @Test
+    public void testAddGas() {
+        gasTank.addGas(5); 
+        assertEquals("After add 5 gallons, getLevel() expected to return 5", 5, gasTank.getLevel());
+    }// PASSED
+
+    @Test
+    public void testAddPastCapacity() {
+        gasTank.addGas(15); 
+        assertEquals("After add 15 gallons, getLevel() expected to return 10", 10, gasTank.getLevel());
+    }// PASSED
+
+    @Test
+    public void testAddPastCapacity() {
+        gasTank.addGas(15); 
+        assertEquals("After add 15 gallons, getLevel() expected to return 10", 10, gasTank.getLevel());
+    }// PASSED
+
+    @Test
+    public void testUseGas() {
+        gasTank.addGas(8);
+        gasTank.useGas(4); 
+        assertEquals("After using 4 gallons, getLevel() expected to return 4", 4, gasTank.getLevel());
+    }// PASSED
+
+    public void testUseBelowCapacity() {
+        gasTank.addGas(8);
+        gasTank.useGas(10);
+        assertEquals("After adding 8 and using 10, getLevel() expected is 0", 0, gasTank.getLevel());
+
+    } // PASSED
+
+
+}
+/** FILE END **/
+
+/**
+ * Simulates a gas tank that can be filled and emptied
+ * @author jusitn
+ */
+
+ public class GasTank {
+
+    private int capacity;
+    private int level;
+
+    public GasTank(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return capacity;
+        // Once you have all of this run a JUNIT test.
+    }
+
+    public void addGas(int amount) {
+        level = Math.min(amount + level, capacity);
+    }
+
+    public void getLevel() {
+        return level;
+    }
+
+    public void useGass(int amount) {
+        level = Math.max(level - amount, capacity);
+    }
+     
+ }
+
+ 
+ // Nouns are good classes
+ // Verbs are good methods

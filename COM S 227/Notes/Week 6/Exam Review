@@ -1,0 +1,118 @@
+package review;
+
+public class Car {
+
+    private double fuelLevel;
+    private double extraFuel;
+    private boolean isDoorLocked;
+
+    public Car(double fuelLevel) {
+
+        this.fuelLevel = fuelLevel;
+        isDoorLocked = false;
+
+    }
+
+    public void lockDoor() {
+        
+        isDoorLocked = true;
+
+    }
+
+    public double getFuelLevel() {
+       
+        fuelLevel = fuelevel + extraFuel;
+        return fuelLevel;
+
+    }
+
+    public 
+}
+
+package review;
+
+public class CarTest {
+    public static void main(String args[]) {
+        Car car = new Car(10);
+        
+        System.out.println("The fuel level is " + car.getfuelLevel() + " the expected fuel level is 10");
+
+
+    }
+}
+
+package review;
+import java.util.Scanner;
+
+public class ApiExamples {
+    public static void main(String args[]) {
+        Scanner scnr = new Scanner(System.in);
+
+        System.out.,println("Emyer a Number: ");
+        int start = scnr.nextInt();
+
+        System.out.println("Enter another number: ");
+        int end = scnr.nextInt();
+
+        System.out.println("Enter a name:");
+        int name = scnr.next();
+
+        String substring = name.substring(start, end);
+
+        System.out.println("The substring is " + substring); 
+        // if the start number is 1 and the end number is 3 and the name is john,
+        // it will print out " oh ".
+        // indexing includes the start but does not include the end.
+
+        double result = Math.pow(start, 3);
+
+        Random rand = new Random();
+
+        int secret = rand.nextInt(10) + 1; // will print number 0-9 without the + 1
+                                           // with the + 1 it will print 1-10
+
+        int guess = 5;
+        if (guess == secret) {
+            System.out.println("Correct!"); 
+        }
+
+    }
+}
+
+package review;
+
+public class LogicExamples {
+    public class void main(String args[]) {
+        int a = 1;
+        int b = 2;
+        int c = 3;
+
+        boolean = isGood;
+
+        if(a > c) {
+            
+        } else {
+
+        }
+
+        if(a > 9) {
+            isGood = true;
+        } 
+        
+        if (a > 8) {
+            isGood = false;
+        } else if (a > 7) {
+            isGood = true;
+        } else {
+            isGood = true;
+        }
+
+        isGood = a != 8;
+        // for boolean expressions you can do this.
+
+        result = !((x > y && y != 0) || x == 0);
+        // similar to the one on the practice exam just different and simplified
+        
+
+    }
+}

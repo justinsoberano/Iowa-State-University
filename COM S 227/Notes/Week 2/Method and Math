@@ -1,0 +1,52 @@
+// used like in C <#include math.c>
+package math;
+
+public class Mathexamples {
+
+    // Declaring a method
+    // Methods can include parameters, in this example it does not. 
+    public static void outputHelloWorld() {
+
+        System.out.println("Hello, World!");
+
+    }
+
+    public static void main(String[] args) {
+        
+        // assigns value to int 110
+        int value = Math.abs(-10) + 100;
+
+        //method calls can include expressions and it has to match parameters
+        //think of functions in C
+
+        // rounds the value 
+        int value2 = Math.round(9.6);
+
+        //Even if you have a fraction inside of the Math.round method, it will do integer division
+        int value2 = Math.round(5/2); // returns 2 because of integer division
+
+        int value2 = Math.round(5/2.0) // returns 3 because of double division
+
+        // Useful Math Methods
+        double d = Math.sqrt(9); // returns 3
+        double e = Math.pow(5, 2); // returns 25
+        double f = Math.min(5, 2); // returns 2
+        double g = Math.max(5, 2); // returns 5
+
+        //Turns in string numbers into actual variables
+        int parsedNum = Integer.parseInt("100");
+
+        // uses Binary to change the first argument to a number
+        // 100 = 4 in binary
+        int parsedNum2 = Integer.parseInt("100", 2);
+
+        // calling the method created above the main method
+        outputHelloWorld();
+
+        // Alternatively you can call a method like below
+        // Useful when names are being reused and are in a different class (file)
+        Mathexamples.outputHelloWorld();
+
+
+    }
+}

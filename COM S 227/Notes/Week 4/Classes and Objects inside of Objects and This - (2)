@@ -1,0 +1,104 @@
+package car;
+
+/* Instead of having to write a lot of code like this */
+public class Convert {
+    public static double convertEur(double amount) {
+        return amount * 1.5;
+    }
+
+    public static double convertRub(double amount) {
+        return amount * 10;
+    }
+
+    public static double convertYen(double amount) {
+        return amount * 20;
+    }
+
+}
+
+/* Currency Class */
+public class Currency {
+    private double rate;
+
+    public Currency(double rate) {
+        this.rate = rate;
+    }
+}
+
+
+
+
+/* Convert Class */
+public class Convert {
+    public static double convert(double amount, Currency currency) {
+
+        return currency.convertFromDollars(amount);
+
+    }
+}
+
+/* Test Class */
+
+package car;
+
+public class TestConvert {
+
+    public static final EUR_RATE = 1.5; // Declaring a constant uses the final word
+
+    public static void main(String args[]) {
+        Currency eur = new Currency(EUR_RATE);
+        Currency yen = new Currency(2.0);
+        Currency rub = new Currency(10.0);
+
+        Convert.convert(9.99, eur); 
+        Convert.convert(9,99, yen);
+    }
+}
+
+/* The keyword This */
+
+public static void setLevel(GasTank gasTank, int level) {
+    gasTank.level  = Math.max(level, gasTank.getCapacity());
+}
+
+public void getGas() {
+
+    GasTank.setLevel(gasTank, gasTank.getCapacity());
+
+    gasTank.setLevel(gasTank.getCapacity());
+
+}
+
+//...
+public GasTank(int capacity) {
+    this.capacity = capacity;
+}
+
+public GasTank() { // you can call construcutors with no parameters and it will pass it to the other constructorn with the parameter
+    this(10);
+})
+//...
+
+public class TestCar {
+    public static void main(String args[]) {
+        GasTank gasTank = new GasTank(100);
+        
+        Car car1 = new Car(11, 15);
+        Car car2 = new Car();
+
+        Car car3 = new Car(40, gasTank);
+
+        car4.buyGas();
+
+        System.out.println(car5.getGasGuafe());
+
+    }
+}
+
+public Car(double mpg, int capacity) {
+    gasTank = new GasTank(capacity);
+    this.mpg = mpg;
+}
+
+public Car
+

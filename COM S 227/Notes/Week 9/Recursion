@@ -1,0 +1,37 @@
+package recursion2;
+
+public class Recursion {
+
+    public static void countUp(int i) {
+        if (i < 0) {
+            return;
+        }
+
+        countUp(i-1);
+        System.out.println(i);
+    }
+
+    public static int factorial(int n) {
+
+        if (i <= 1) {
+            return 1;
+        }
+        return n * factorial(n-1);
+    }
+
+    public static int fibi(int n ) {
+        
+        if (n == 1 || n == 0) {
+            return n;
+        }
+
+        return fib(n - 2) + fib (n - 1);
+    }
+
+    public boolean isPalindrome(Strint text) {
+    }
+
+    public static void main(String args[]) {
+        countUp(10);
+    }
+}

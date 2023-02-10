@@ -1,0 +1,98 @@
+package ArrayList;
+
+import.java.util.ArrayList;
+
+public class ArrayListExamples {
+
+    public static double findMean(String text) { //Finds the median value from a string of numbers
+        
+        // Find out how many numbers there are
+
+        Scanner scnr1 = new Scanner(text); //FOR ARRAYS
+        int length = 0;
+
+        while(scnr1.hasNextInt()) { // gets the size of the array
+            scnr1.nextInt();
+            length++;
+        }
+
+        ArrayList<Integer> values = new ArrayList<Integer>();
+
+        Scanner scnr = new Scanner(text); // FOR ARRAY LISTS
+            while (scnr.hasNextInt()) {
+                int num = scnr.nextInt();
+                values.add(num);
+            }
+
+            Collections.sort(values);
+
+
+        int arr[] = new int[length];
+        Scanner scnr2 = new Scanner(text);
+        int i = 0;
+
+        while(scnr2.hasNextInt()) { //gets all of the valeus and puts them inside of the array.
+            int num = scnr.nextInt();
+            arr[i] = num;
+            i++;
+        }
+
+        Arrays.sort(arr); // Sorts the array
+
+        if(length % 2 = 0) {
+            return (arr[length / 2] + arr[length / 2 - 1]) / 2.0); 
+        } else {
+            return (arr[length / 2])
+        }
+
+
+    }
+
+    public static void main(String args[]) {
+        ArrayList<String> names = new ArrayList<String>();
+
+        names.add("Bob");
+        names.add("Kim");
+        names.add("John");
+
+        names.get(0); //Gets Bob
+
+        for (int i = 0; i.names.size(); i++) {
+            System.out.println(names.get(i));
+        }
+
+        for (String name : names) { // For each names in String Name, do whats inside.
+            System.out.println(name)
+        }
+
+        names.add(1, "Sue"); // Adds Sue in index 1, making the ArrayList size 4
+
+        names.remove(2); // Removes Kim from index 2
+
+        Integer myId = 5; //boxing
+        int myInt = myId; //unboxing
+
+        ArrayList<int> ids = new ArrayList<int>();
+
+        ids.add(20); //boxing
+        Integer firstId = ids.get(0);
+        int firstInt = ids.get(0); //unboxing
+
+        if (firstId == secondId) { // DOES NOT WORK
+            System.out.println("They are the same");
+        }
+
+
+        if (firstId.equals(secondId)) { // Works
+            System.out.println("They are the same");
+        }
+
+        // CompareTo; first > second returns 1; first == second returns 0; first < second returns -1;
+        if (firstId.compareTo(secondId) > 0) { // Works
+            System.out.println("They are the same");
+        }
+
+
+
+    }
+}

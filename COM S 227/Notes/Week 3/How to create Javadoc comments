@@ -1,0 +1,56 @@
+package Rectangle;
+
+/**
+ * Represents the shape of the rectangle
+ * @author justin
+ */
+
+
+public class Rectangle {
+
+
+    private double width;
+    private double height;
+
+    /**
+     * Constructs a new rectangle of width and height
+     * @param w - width of the rectangle
+     * @param h - height of the rectangle
+     */
+    
+    public Rectangle(double w, double h) { 
+        width = w; 
+        height = h;
+    }
+    public Rectangle(double length) {
+        width = length;
+        height = length;
+
+    public double getWidth() {
+        return width;
+
+    public void setWidth(double w) {
+        width = w;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height){
+        this.height = height; 
+    }
+
+    public getArea() {
+        return width * height;
+    }
+
+    public void grow(double width, double height) {
+        this.width += width;
+        this.height += height;
+    }
+
+    public static sum(double a, double b) { 
+        return a + b;                   
+    }
+}

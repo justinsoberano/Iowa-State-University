@@ -1,0 +1,56 @@
+
+// Dynamic Programming
+
+Public static int fib(int n) {
+
+    ArrayList<Integer> history = new ArrayList<Integer>();
+
+    history.add(0);
+    history.add(1);
+
+    for(int i = 2; i < n; i++) {
+        int fibi = history.get(n - 2) + history.get(n - 1);
+        history.add(fibi);
+    }
+
+    return history.get(n);
+}
+
+fin(int n) {
+    int prev2 = 0;
+    int prev1 = 1;
+    int current;
+
+    for(int i = 2; i < n; i++) {
+        current = prev2 + prev1;
+        prev2 = prev1;
+        prev1 = current;
+    }
+    return current;
+}
+
+public static boolean hasValue(int [] arr, int x) {
+
+    for(int i = 0; i < n; i++) {
+        if(arr[i] == x ) {
+            return true;
+        }
+    }
+    return false;
+}
+
+public static void selectionSort(int arr[]) {
+
+    int n = arr.length;
+    for(int nextSort = 0; next.sort < n; nextSort++) {
+        int minIndex = nextSort;
+        for(int r = nextSort; r < n; r++) {
+            if(arr[r] < arr[minIndex] {
+                minIndex = r;
+            }
+        }
+        int temp = arr[nextSort];
+        arr[nextSort] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+}

@@ -1,0 +1,54 @@
+public class Arrays {
+
+    public static void printReverse(int[] arr) {
+        for(i = arr.length - 1; i >= 0; i--) {
+            System.out.println(arr[i]);
+        }
+    }
+
+    public static void reverse(int[] arr) {
+        int[] rev = new int[arr.length];
+
+        for(int i = arr.length - 1; i >= 0; i--) {
+            rev[arr.length - i - 1] = arr[i];
+        }
+
+    }
+
+    public static boolean hasDuplicate(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; i < arr.length; i++) {
+                if (arr[i] == arr[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void clampToZero(int arr[]) {
+        for(int i = 0; i < arr.length; i++) {
+            if (arr[i] < 0) {
+                arr[i] = 0;
+            }
+        }
+    }
+
+    public static void main(String args[]) {
+        int[] ids; // declared an array
+
+        ids = new int[10]; //initialized the array
+
+        ids[0] = 5;
+        ids[1] = 15;
+        ids[2] = 25;
+
+        String names[] = {"Bob", "Sue", "Kim"};
+
+        for (int i = 0; i < names.length; i++) {
+            System.out.println(names[i]);
+        }
+
+        ids[3] = ids[0] + ids[1];
+    }
+}

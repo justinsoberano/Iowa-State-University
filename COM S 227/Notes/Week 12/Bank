@@ -1,0 +1,90 @@
+package bank;
+
+public class Account { // Superclass
+    
+    private int id;
+    private double balance;
+
+    public Account(int id, double balance) {
+        this.id = id;
+        this.balance = openBalance;
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        balance = Math.max(0, balance - amount);
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    // public void setBalance(double amount) {
+    //     balance = amount;
+    // }
+
+}
+
+class SavingsAccount extends Account {
+
+    double minBalance;
+
+    public SavingsAccount(int id, double balance, double minBalance) {
+        super(id, openBalance); // calls the constructor of the superclass, has to be the first thing in a method
+        this.minBalance = minBalance;
+    }
+
+    @Override
+    public void withdraw(double amount) {
+
+        if(getBalance() - amount >= minBalance) {
+            super.withdraw(amount);
+        }
+    }
+}
+
+class CheckingAccount extends Account {
+    double maxWithdraw;
+
+    public CheckingAccount(int id, double balance, double maxWithdraw) {
+        super(id, openBalance); // calls the constructor of the superclass, has to be the first thing in a method
+        this.maxWithdraw = maxWithdraw;
+    }
+
+    @Override
+    public void withdraw(double amount) {
+        double withdraw = getBalance() - Math.min(maxWithdraw, amount);
+        setBalance(Math.max(0, withdraw));
+    }
+
+}
+
+// NEW FILE //
+
+package bank;
+
+public class AccountTest {
+
+    public static void chargeFee(Account acc) {
+        acc.withdraw(100);
+    }
+
+    public static void main(String args[]) {
+        SavingsAccount mySavings = new SavingsAccount(10, 0, 100);
+        CheckingAccoung myCheckings = new CheckingAccoung(10, 0, 100000);
+
+        ArrayList<Account> myAccounts = new ArrayList<Accounts>();
+        Account myAccount = mySavings;
+        
+        chargeFee(mySavings);
+        chargeFee(myCheckings);
+
+        for(Account acc : myAccounts) {
+            chargeFee(acc);
+        }
+
+    }
+}

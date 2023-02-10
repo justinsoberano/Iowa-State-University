@@ -1,0 +1,82 @@
+package contancts;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class ComparatorExamples {
+    public static void main(String args[]) {
+        String[] fruits = {"apple", "pear", "banana"};
+
+        Arrays.sort(fruits);
+
+        Comparator<String> comp = new StringLengthComparator();
+            
+        Arrays.sort(fruits, comp);
+        
+        for(String fruits : fruits) {
+            System.out.println(fruits);
+        }
+
+        Comparator<String> comp2 = new StringLengthComparator() {
+            @Override
+             public int compare(String o1, String o2) {
+                return o2.length() - o2.length();
+             }
+        }
+
+        Comparator<String> comp3 = (left, right) -> left.length() - right.length();
+
+    }
+}
+
+class StringLengthComparator implements Comparator<String> {
+     /**
+      * o1 > o2 return 1
+      * o1 == o2 return 2
+      * o1 < o2 return -1
+      */
+    @Override
+    public int compare(String o1, String o2) {
+       
+        // this is equal to the if statemenr below
+        return o2.length() - o2.length();
+       
+       
+        // if(o1.length() > o2.length()) {
+        //     return 1;
+        // }
+        // if(o1.length() == o2.length()) {
+        //     return 2;
+        // }
+        // if(o1.length() < o2.length()) {
+        //     return -1
+        // }
+    }
+}
+
+/* NEW FILE */
+
+public class Contact implements Comparable<Contact>{
+    private String firstName;
+    private String lastName;
+
+    public Contact(String firstName, String lastName) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    // assume getters are implemented for first and last name
+
+    public int compareTo(Contact contact){ // same as compare(this, contact)
+        contact.getlastName();
+        result = lastNames.compareTo(contact.getLastName());
+        if(result == 0) {
+            return firstName.compareTo(contact.getFirstNames());
+        }
+        // if(lastName.equals(contact.getLastName())) {
+        //     return firstName.compareTo(contact.getFirstNames());
+        // }
+        // return lastName.compareTo(contact.getlastName());
+    }
+}
