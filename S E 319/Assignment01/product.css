@@ -104,7 +104,36 @@
   }
 
   .homeimage {
+    max-width: 100%;
     height: auto;
-    width: 100%;
-    object-fit: cover;
   }
+
+  body {
+    background-color: rgb(51, 51, 51);
+  }
+
+  .footercolor {
+    background-color: rgb(51, 51, 51);
+    color: #ffffff;
+  }
+
+.footertext {
+    color: rgba(255, 255, 255, 0.449);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@font-face {
+    font-family: 'minecraftregular';
+    src: url('./WebFontKit/minecraftregular-bmg3-webfont.woff2') format('woff2'),
+         url('./WebFontKit/minecraftregular-bmg3-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.minecraftregular {
+    font-family: 'minecraftregular';
+    font-weight: normal;
+    font-style: normal;
+}
