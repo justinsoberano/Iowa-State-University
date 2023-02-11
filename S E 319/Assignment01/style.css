@@ -154,7 +154,14 @@
          url('./WebFontKit/minecraftregular-bmg3-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+}
 
+@font-face {
+  font-family: 'minecraftbold';
+  src: url('./WebFontKit/minecraftbold-nmk1-webfont.woff2') format('woff2'),
+       url('./WebFontKit/minecraftbold-nmk1-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 .minecraftregular {
@@ -163,3 +170,48 @@
     font-style: normal;
 }
 
+.hboverflow {
+  position: relative;
+  z-index: 100;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  margin-top: -13px;
+}
+
+.characterpng {
+  width: 30%;
+  height: 15%;
+  margin-left: 6vw;
+  margin-top: 14vw;
+}
+
+.contain {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.picture {
+  flex-basis: 40%
+}
+
+.text {
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+.charactername {
+  margin-top: 100px;
+  font-family: 'minecraftbold';
+  font-size: 2vw;
+  color: white;
+  margin-bottom: -5px;
+}
+
+.characterinfo {
+  font-family: 'minecraftregular';
+  font-size: 1vw;
+  color: white;
+}
