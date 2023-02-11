@@ -138,8 +138,9 @@
   }
 
   .footercolor {
-    background-color: rgb(51, 51, 51);
+    background-color: rgb(28, 28, 28);
     color: #ffffff;
+    margin-bottom: 10px;
   }
 
 .footertext {
