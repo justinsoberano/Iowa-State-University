@@ -1,0 +1,305 @@
+Welcome to Computer Science 228
+===============================
+Chapter 03.pdf
+Inheritance
+=========
+
+		
+
+		
+1. Inheritance through interfaces and abstract classes
+	
+	Reason for the existence of inheritance:
+	a. mental model
+	b. duplication
+
+	Example
+	public abstract class Mammal {
+		public void breathe(){
+			System.out.println("lungs");
+		}
+		public void procreate(){
+			System.out.println("Uterus");
+		}
+		public abstract String move();
+		
+	}
+	
+	Note:
+	Abstract translates to "unimplemented" in 
+	English.
+	An abstract class has one or more 
+	abstract (unimplemented) methods.
+	
+	public class BlueWhale extends Mammal{
+		@Override 
+		public String move(){
+			return "swim";
+		}
+	}
+	public class Rhinoceros extends Mammal{
+		@Override 
+		public String move(){
+			return "trot";
+		}
+	}
+	
+	?
+	Mammal m = new Mammal();
+	//Compile-time error: cannot instantiate 
+	//abstract type Mammal
+	
+	//dynamic binding in Java: 
+	//each ancestor reference can hold ALL
+	//its descendant objects.
+	//Rule: only methods known to the 
+	//ancestor can be called
+	
+	Mammal m = new Rhinoceros();
+	
+	Can call 
+	m.procreate();
+	can call 
+	m.breathe();
+	can call
+	m.move(); //will use the MOST RECENT 
+				//implementation of the 
+				//method.
+
+
+	What is an interface?
+	It is a keyword denoting a class with 
+	NO implemented methods or instance variables
+
+	It is a NEWER concept than abstract class.
+	Although a FULLY ABSTRACT class is 
+	equivalent functionally to an interface.
+
+	Multiple inheritance and the Diamond problem.
+	
+	C++ allows multiple inheritance:
+	
+	public class HorseShark extends Horse, Shark
+	{
+		//both horse and shark have 
+		// a definition of breathe(), 
+		//because they are vertebrates 
+		//and all vertebrates breathe.
+	
+	}
+	
+	When we invoke:
+	myPetHorseShark.breathe(); 
+	
+	What happens?
+	
+	
+	In C++, you disambiguate by calling the 
+	relevant ancestor in front
+	Horse.breathe()
+	Shark.breathe()
+	
+	What if we had Rule115_57() vs. Rule115_57()
+	for tax software?
+	
+	Java said: cannot have multiple inheritance.
+	Only one parent class allowed.
+	
+	
+	What if I wanted to construct an Optimus Prime object?
+	
+	I would want to inherit the behavior of a class SemiTruck
+	and a class StarShip.
+	
+	the interface concept was invented to allow composition of 
+	functionality:
+	
+	We use the keyword "implement" and can 
+	implement MANY interfaces. They have 
+	NO code inside them. They are just 
+	method signature collections.
+	
+	
+	interface Locomotion{
+		void move();
+	
+	}
+	
+	All interfaces are public and abstract.
+	They are "contracts" between a programmer
+	and themselves or a team lead and 
+	team members. These contracts are 
+	enforced by the compiler.
+	
+	They act as bulkheads to partition 
+	responsibility.
+	Less responsibility for the client, 
+	because they don't need to know how 
+	something is done;
+	More freedom for the provider, because 
+they can change implementations without 
+the client knowing.
+
+interface Transporter{
+	boolean movePackage();
+}
+	
+
+---------------------------------------
+Insect examples to show extends and implements in action
+---------------------------------------
+
+public interface Locomotion
+{
+	void move();
+}
+
+public class Insect
+{
+	protected int size;
+	protected String color;
+	public Insect(int size, String color)
+	{
+		this.size = size;
+		this.color = color;
+	}
+	
+	public int getSize(){
+		return size;
+	}
+	public String getColor(){
+		return color;
+	}
+}
+
+public class Grasshopper extends Insect implements Locomotion 
+{	
+	public Grasshopper(int size, String color)
+	{
+		super(size, color); //we invoke the parent's method with
+	}						//the keyword super
+
+	@Override  
+	public void move()
+	{
+		System.out.println("hop"); 
+	}
+}
+
+public class Bee implements Locomotion, Pollination
+{
+	@Override
+	public void move()
+	{
+		System.out.println("fly");
+	}
+	public void makeHoney()
+	{
+		System.out.println
+			("Orange Blossom");
+	}
+	@Override
+	public void pollinate(){
+		System.out.println("Fly to blossom");
+	}
+}
+	
+@Override is an "annotation". It is not necessary 
+for the functionality to work BUT it tells 
+the compiler our intention to override a method.
+
+In Linux, we have a method kill() to destroy a 
+process.
+
+	Let us override kill:
+	
+	public boolean kil1(){....};
+	
+	Without @Override, Java will say:
+	"Oh OK, you are making a new method."
+	
+	With @Override, Java will catch the typo 
+	and will throw a compile-time error that 
+	you do not match an existing method signature.
+
+	
+	
+public class Katydid extends Grasshopper
+{
+	public Katydid(int size, String color){
+		super(size, color);
+	}
+	@Override
+	public String feedOn(){
+		return "variety";
+	}
+}
+
+Class Diagram, p. 16 of 03.pdf shows the above classes 	
+
+2. Static Typing and Dynamic Binding - Insect examples
+
+Code:
+
+1. Locomotion b; //OK.
+
++--------------+
+|0xABA         |
+|0xFFA   +-----|
+|        | GH  |
++--------------+
+
+
+2. b = new Grasshopper(); //OK
+
+Dynamic binding:
+An ancestor reference can contain any of its 
+descendants.  The ancestor ONLY sees its 
+own methods.
+
+Rephrased:
+Any descendant can fulfill the role of an 
+ancestor because it has the requisite methods.
+
+-------
+Ancestor1's methods and variables
+----------
+Ancestor2's methods "    "
+----------
+Ancestor3's methods  "   "
+----------
+FinalChild   "      "     "
+----------
+
+If our reference is 
+
+Ancestor1 a = new FinalChild();
+
+a can only call methods from Ancestor1's region 
+of memory!
+
+To force the compiler to use the newer methods, 
+cast to a child:
+
+((FinalChild) a).childMethod();
+
+	--this will compile. It means "I am the designer
+	and am telling you the object is a FinalChild,
+	not an Ancestor1"
+
+
+3. b.move();
+
+4. b = new Bee();
+
+5. b.move();
+
+6. b.makeHoney();
+
+
+
+
+Transporter t = new UberMidsi0zeSedan();
+t.movePackage("Chicago");
+
+

@@ -1,0 +1,209 @@
+Welcome to COMS 228!
+====================
+Lecture 08.pdf
+
+-----------------
+Exceptions
+-----------------
+1. Why do they exist?
+-before exceptions, all potentially 
+abnormal conditions had to be 
+handled right where they arose.
+
+-exceptions allow us to handle 
+an abnormal condition in any 
+method in the call stack and the 
+original method.
+
+Exceptions are generated when 
+code has the "throws" keyword.
+
+This packages an object that may 
+just have an informative name 
+or 
+it may have as many pieces 
+of information as desired.
+
+Java errors still exist. 
+ThreadDeath is one example.
+
+
+
+1.1 mechanism of exceptions:
+	
+
+-conditions from which no recovery 
+is expected to be possible.
+Exceptions provide reaction opportu-
+nities.
+
+You need a try-catch statement;
+in the catch clause you write code 
+to be executed when the exception 
+occurs.
+
+
+2. Example of catching an exception:
+
+public static void main(String[] args)
+{
+	InputStream istream;
+	File inputFile;
+	try {
+		inputFile = new File(args[0]); 
+		//the constructor 
+		//method throws an exception
+		istream = new InputStream(inputFile);
+	}
+	catch (FileNotFoundException ex) {
+		System.out.println("file " +
+		args[0] + " not found");
+	}
+}
+
+3. General syntax for catching exceptions:
+
+try-catch-catch-finally
+	//declare variables here 
+	//that will be manipulated 
+	//by code in the try-catch block.
+try{
+	//code that throws as many 
+	//exceptions as you want
+	//Any variables created here
+	//will not be available outside 
+	//the try-catch block.
+
+} //As soon as the first exception is 
+	//thrown, the code in the try block
+	//will NOT execute any further.
+catch(FileNotFoundException e){
+	//progression should be from 
+	//most specific to most generic 
+	//exception handlers.
+}
+catch(IndexOutOfBoundsException e){
+
+
+}
+catch(Exception e){
+	//acts as catch-all and will 
+	//react to all exceptions, because 
+	//all exceptions extend concrete 
+	//class Exception.  If you 
+	//you have an Exception handler, 
+	//it should be the very last of 
+	//the handlers, because otherwise 
+	//it will prevent more specific 
+	//handlers from executing.
+}
+finally{	//optional clause; 
+			//executes whether or 
+			//not an exception was 
+			//thrown; used to 
+			//free resources, such 
+			//as close database connection
+}
+
+If there is more code after the try-catch
+block and we did not handle the 
+exception, it is NOT executed.
+If none of the exception handlers, 
+which are the catch statements, match 
+the exception, e.g. because you don't 
+have an Exception handler, the exception 
+object will be propagated to ancestor 
+methods.
+If main() does not have a handler for it,
+the virtual machine terminates.
+
+
+
+Exception vs CustomException
+
+CustomException is forced to derive 
+from Exception; be careful with 
+the catch-all
+Exception handler.
+
+
+4. Checked vs Unchecked exceptions
+
+A checked exception is one that the 
+compiler requires a try-catch block for.
+
+Some exceptions, and in particular 
+runtime exceptions, are considered grievous 
+enough that handling is not required 
+by the compiler, e.g
+
+
+-IndexOutOfBoundsException
+-ClassCastException
+-NullPointerException.
+
+
+
+5. Exception class hierarchy (08.pdf, p. 13)
+
+6. Creating custom exceptions:
+
+class MyException extends Exception {
+	public MyException() { super(); }
+	public MyException(String s)
+	{	 
+		super(s); 
+	}
+}
+
+7. Throwing exceptions
+
+public class Stack {
+	//...other methods
+	public Object pop() throws EmptyStackException
+	{
+		if (isEmpty())
+			throw new EmptyStackException();
+		//...other code
+	}
+}
+
+The calling code for myStack.pop() has 
+2 options:
+
+1. write a try-catch statement:
+
+try{
+	nextElement = myStack.pop()
+}
+catch(EmptyStackException e){
+	System.out.println("Stack is empty:
+		cannot proceed");
+}
+
+2. re-throw the EmptyStackException by 
+adding a throws clause to the signature:
+
+public void stackManipulator() throws 
+		EmptyStackException, 
+		NoSuchElementException{
+	//no need for try-catch.
+}
+
+------------------------
+Rules of overriding methods
+------------------------
+
+•You cannot change the method’s 
+name or parameter types.
+•You CAN change the return type, 
+as long as the newtype is compatible with
+the original type.
+•You can change a method from 
+protected to public, but
+you cannot make the access more restrictive.
+	This is to prevent locking down 
+	existing APIs.
+•You can omit a throws declaration, 
+but you cannot
+add a throws declaration.

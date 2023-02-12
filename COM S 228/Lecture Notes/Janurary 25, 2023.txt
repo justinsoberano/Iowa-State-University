@@ -1,0 +1,225 @@
+Welcome to COMS 228
+Lecture 04
+===================
+Class code from insect.zip
+
+1. Interfaces vs. Abstract Classes
+
+public interface Locomotion
+{
+	void move();
+}
+
+public class Grasshopper extends Insect implements Locomotion 
+{	
+	public Grasshopper(int size, String color)
+	{
+		super(size, color); 
+	}
+
+	@Override
+	public void move()
+	{
+		System.out.println("hop"); 
+	}
+}
+
+public class Bee extends Insect implements Locomotion
+{
+	@Override
+	public void move()
+	{
+		System.out.println("fly");
+	}
+	public void makeHoney()
+	{
+		System.out.println
+			("Orange Blossom");
+	}
+}
+	
+
+2. Static Typing and Dynamic Binding - Insect examples
+	-Java, C# are statically typed
+	-Python is not
+	
+In Python: you own the memory location of 
+a variable and can put anything into it.
+
+
+b = 32
+b = "Jane Doe"
+b = new Employee("Jane Doe")	
+	
+int b = 32;
+b = "Jane Doe"; //Compiler error: incompatible
+types. 	
+	
+A memory location has a type. Only that type 
+is allowed into that memory location.
+
+Java's dynamic binding gives wiggle-room 
+around the statically-typed variables:
+
+A memory location can accept any of its 
+descendants.
+
+If Employee is the parent class, and 
+HREmployee and ITEmployee are child classes,
+we can declare:
+
+Employee e = new ITEmployee("Jane Doe");
+
+Any descendant can substitute for any ancestor.
+The opposite is not true. For example,
+Employee cannot be assigned to ITEmployee,
+because Employee does not have knowledge of
+IT-related functionality.
+
+ITemployee ite = new Employee("Jane Doe");
+	//throws compile-time error: incompatible 
+	//types.
+	
+	
+Example class diagram on p. 16 of 03.pdf
+Code:
+
+1. Locomotion b; //OK
+
+2. b = new Grasshopper(); // OK because 
+		//we are instantiating a concrete child.
+
+3. b.move(); //"hop"
+
+4. b = new Bee(); //create a new object of type 
+	//Bee and delete the old object of type 
+	//Grasshopper.  Java monitors every object 
+	//in memory, and when the last reference 
+	//is destroyed OR redirected, it marks 
+	//the object for garbage collection
+
+5. b.move(); //"fly"
+
+6. b.makeHoney(); //Compile-time error: 
+	//method makeHoney() is undefined for 
+	//type Locomotion
+	
+	Use casting to force the compiler to 
+	use the functionality:
+	
+	((Bee) b).makeHoney();
+		//translated to English: "Compiler"
+		//I know the runtime value of this 
+		//variable and it is a Bee. Please 
+		//execute a Bee method.
+		//Compiler checks if the cast 
+		//is legal.  Meaning casting to 
+		//a descendant or an ancestor.
+		//Since Bee is a descendant, it 
+		//allows the cast.
+		//Result: "Orange Blossom"
+	
+--------------------------	
+
+
+Extended example with more classes:  p.7 of 04.pdf
+
+1. 		
+		Locomotion l; 	 //OK
+
+
+
+		Grasshopper g;   //OK
+		
+
+
+2. 
+		Pollination p = new Pollination(); 
+			//Compile-time error: cannot 
+			//instantiate abstract type 
+			//Pollination.
+
+		
+ 		Insect i = new Insect(3, "Green"); 
+			//Compile-time error: cannot 
+			//instantiate abstract type 
+			//Insect.
+
+
+		
+		Insect i = new Grasshopper(2, "Brown");  
+			//Compile-time error: cannot 
+			//instantiate abstract type 
+			//Grasshopper.
+
+
+		
+3. 
+		Katydid k = new Katydid(3, "Green"); 
+			//OK because concrete and of the 
+			//same type.
+
+		Grasshopper g = k; //OK because 
+			//Katydid is concrete and it is 
+			//a child.
+
+		
+		Locomotion l = new Katydid(3, "Brown"); 
+			//OK
+
+		g = l;  //parents cannot be assigned 
+			//to child variables. Locomotion 
+			//does not know the functionality 
+			//of Grasshopper.
+			
+			//Compile-time error: incompatible 
+			//types
+
+
+		// how to fix? 
+		
+		g = (Katydid) l;
+		//Translation to English: 
+			"Compiler, this is actually 
+			a Katydid at runtime, so you 
+			can safely transfer it over 
+			to Grasshopper.
+		//Compiler check 1: 
+			//Can we cast locomotion to 
+			//Katydid? Yes.
+		//Compiler check 2:
+			//is Katydid compatible with 
+			//Grasshopper? Yes.
+	
+4. 	No conversion between siblings
+
+		Grasshopper g = new Locust(3, "Red"); 
+			//OK because Locust is a concrete 
+			//child.
+
+
+		Katydid k = (Katydid) g; 
+			//trick the compiler into 
+			//putting a Locust into a Katydid.
+			//Compiler check 1: is Katydid 
+			//compatible with Grasshopper. Yes.
+			//Compiler check 2: is Katydid 
+			//compatible with the variable type?
+			//Yes.  Compiler allows this.
+			//At runtime, Java knows the 
+			//exact type of each object in 
+			//memory.  Throws 
+			ClassCastException, translated 
+			as "You told me this is a Katydid
+			but it is an incompatible Locust".
+
+		g = new Mantis(4, "Green"); 
+
+
+		
+5.   
+		Locomotion l = new Katydid(3, "Brown"); 
+
+
+
+		l.attack();   

@@ -1,0 +1,153 @@
+Welcome to COMS 228!
+Lecture 2: Abstract Data Types and Object Oriented Programming
+--------------------------------------------------------------
+
+ArrayList is an ADT: a collection
+of data items wrapped in a class or 
+group of classes together with methods
+that act on the data.
+
+They are called abstract because 
+there is a division between the 
+"user interface" of the ADT and 
+what the code implementation is.
+The interface is the methods 
+that we use to interact with the 
+data.
+The backend is invisible to the user,
+hence "abstract"
+
+
+public abstract class Shape{
+
+	public abstract double getArea();
+
+}
+
+public class Circle extends Shape{
+	/*...instance variables...*/
+	@Override
+	public double getArea(){	
+		return PI*r*r;
+	}
+}
+
+With this setup, the client (map-making
+software) just calls 
+
+double calculateArea(){
+	return incomingShape.getArea();
+	
+	/*instead of 
+	
+	if shape is square, calculate;
+		else if shape is circle, calculate;
+		else if shape is triangle, etc.
+	*/
+}
+
+
+Creating software systems is difficult!
+	-Nonlinear scaling of effort with
+		the size of the program.
+		Writing lines 0-3000 is much
+		easier than writing lines 
+		100,000-103,000
+
+	-Mental models of team members 
+		diverge.
+		
+	
+Helpful principles:
+	Modularity -partitions in the codebase
+	allowing to work on part of 
+	the project without knowing 
+	how the whole is put together.
+		
+	Abstraction
+		the result of modularity
+		that allows us to use 
+		some functionality without 
+		knowing how it is implemented.
+	
+Object Oriented Programming
+	Inheritance - something 
+	from the real world, not only 
+	in biological systems, but really
+	in any category of objects or 
+	concepts 
+	Identity
+		- a stray dog on the street 
+		has an identity even if 
+		it does not have a name.
+		-in the same way, an object 
+		in memory has an identity, 
+		even if there are 1 million 
+		objects like it in memory.
+	State
+		- the values of the instance 
+		variables - variables inside 
+		an object BUT outside of a 
+		method.
+
+All of the above make software 
+structure align closely with the 
+real world. This allows many 
+team members to work on the same 
+project.
+
+
+
+Review of object syntax and concepts: p.9 of 02.pdf	
+
+A class is a blueprint from which 
+objects are made at runtime, most 
+commonly with 
+
+the keyword new.
+
+Employee e = new ITEmployee("John Doe");
+
+We call a method called a Constructor
+which "instantiates" the class into 
+an object instance.
+
+Local == method variables are 
+	declared INSIDE methods; they
+	live while the method executes.
+
+Instance == object variables are 
+		declared INSIDE objects but 
+		OUTSIDE methods. They live
+		while a particular object 
+		exists in memory. When a 
+		method terminates, 
+		the instance variables remain.
+		
+Static == class variables are 
+		declared like instance variables 
+		but with the keyword "static".
+		
+		They are SHARED between all 
+		objects: same location 
+		in memory accessed by a 
+		million objects of the same 
+		class. They exist before 
+		any object of the class 
+		has been created, and 
+		are only destroyed when 
+		the program terminates.
+
+The keyword "this" is translated in 
+English to "me".  It is there for 
+an object to be able to refer to 
+itself.
+
+Two common uses:
+1. disambiguate what variable 
+belongs to what object.
+
+2. for an object to be able to serve 
+itself to a client.
+
+double distToB  = myPoint.distance((Point)b);

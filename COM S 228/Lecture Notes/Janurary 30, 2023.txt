@@ -1,0 +1,135 @@
+COMS 228 Lecture 06
+=========
+1. Primitive variables: 
+short   float    boolean
+int		double   char
+long			 byte
+
+-single location in memory, unlike 
+Object variables, which use 2 locations 
+in memory: one for the reference, that 
+we call the "variable", which holds 
+an address of the object in memory. (Or null)
+
+visualization: p. 13 of 05.pdf
+
+Primitive variables are used with operators
+PEMMDAS
+Object variables use methods instead of 
+operators.
+
+int a = 12;
+int b = 15
+if (a == b) {//do something}
+
+If a and b were objects instead of ints, 
+the code is still legal:
+Point a = new Point (1,2);
+Point b = new Point(3,4);
+
+if( a == b) {//Print: it's the same point}
+
+for objects, == means "the references point
+to the same address"
+
+How do we test for conceptual equality?
+e.g. 2 different Point objects with 
+coordinates (1,2).  If we use ==, it 
+will return false because the address is
+NOT the same.
+
+
+Instead, we define an equals() method in 
+the Point object, and write code to tell
+Java how these Points compare to one another.
+
+-----------------
+Java.lang.Object
+-----------------
+Three distinct terms:
+
+-Class: a blueprint for creating a particular
+type of object in memory
+-Object: a product of the blueprint that 
+may have been created many times in memory.
+It is a memory location with values stored 
+in different variables.
+-the Object class: a blueprint named Object.
+(by contrast with object, lowercase, which 
+refers to the concept of object)
+java.lang.Object.
+
+
+public class Object{
+	//any class created by a programmer 
+	//will have these methods callable
+	//without any work on the part of 
+	//the programmer
+	
+	-toString(): prints a hashcode, not 
+				useful to us.
+	-getClass(): returns the runtime 
+		object in a variable. E.g. 
+		if myInsect contains a Katydid,
+		getClass() will return an 
+		Insect.Katydid  (because Insect 
+		was the name of the namespace)
+	-equals(): useless: returns true 
+		if the object is the same unique
+		object in memory, at the same 
+		address. Same functionality 
+		as ==.
+	-clone(): returns correct copy 
+		for some classes and an incorrect 
+		copy for others :|  
+	-others
+}
+
+If you write a custom class that does not extend another class,
+
+public class Point {
+	//some methods
+}
+
+Java treats the class as having been declared as:
+
+public class Point extends Object{
+	//some methods
+	getClass()
+	equals()
+	clone()
+	toString()
+	hashCode()
+}
+
+
+If we want a conceptual equality test for 
+a custom object, we have to write it.
+
+3. Equals(). Needs to be overriden.
+
+/**
+ *  Equals method for an integer 2D Point.
+ * @param any class.
+ */
+
+@Override  //Step 1
+public boolean equals(Object o) //Step 2
+{		/*Step 3*/
+	if(o == null   || 		/*Step 4*/
+		this.getClass() != o.getClass())
+			return false;
+	/*Step 5 - cast to particular class
+		so we can use the class's methods
+		and variables.*/
+	Point other = (Point) o;	
+	/*Step 6: compare instance variables*/
+	return this.getX() == other.getX()
+				&&
+			this.getY() == other.getY();	
+				
+}
+
+
+//incorrect
+if (!(obj instanceof Point)) return false;

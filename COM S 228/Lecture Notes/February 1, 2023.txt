@@ -1,0 +1,213 @@
++Welcome to COMS 228! 07.pdf
+====================
+Copying, Shallow vs Deep Copy 
+
+Our job is to duplicate a method in memory.
+Method 1: write a Copy constructor
+	usage: 
+	Point newPoint = new Point(otherPoint);
+Method 2: write a custom signature:
+	public Point makeCopy(){...}
+	usage:
+	Point newPoint = otherPoint.makeCopy();
+	
+Method 3: use java.lang.clone()
+	usage:
+	Point newPoint = otherPoint.clone();
+
+
+Copy constructor: construct an object 
+and initialize its instance variables 
+to the values of another object.
+
+public Point(Point other){
+	x = other.x;
+	y = other.y;
+}
+
+Custom copy method:
+public Point makeCopy(){
+	Point copy = new Point(x,y);
+	return copy;
+}
+
+Method 3: Object.clone();
+Padlocks that Java designers put around 
+the clone() method:
+
+Let us try to clone() Point.
+
+First attempt:
+Point newPoint = myPoint.clone();
+	-throws CloneNotSupportedException
+	
+	
+step 1: must change the class to implement 
+the Cloneable interface.
+
+public class Point implements Cloneable();
+
+step 2: override clone(). The original 
+	implementation returns Object, but 
+	in Java we are allowed to cast an
+	overriden method's return type to 
+	be a descendant. We take this 
+	opportunity to avoid casting from 
+	Object to Point during usage time.
+
+@Override
+public Point clone(){
+	Point copy = null;
+	/*step 3: write a try-catch statement 
+	to catch a CloneNotSupportedException*/
+	try{
+		/*step 4: invoke the clone() method
+			finally! */
+		copy = (Point) super.clone();
+		
+	}catch(CloneNotSupportedException e){
+		//No code is written here because 
+		//this exception exists to prevent 
+		//"unenlightened" use of clone()
+	}
+	return copy;
+}
+
+the above code, if it were not shackled, 
+would condense to 
+
+public Point clone(){
+	return (Point) super.clone();
+}
+
+And it will create a perfect copy of a Point
+object.
+
+How does the ancestor know how to make 
+a perfect copy of a descendant?!
+
+It uses a "native" method, asking the OS 
+to give it an exact copy, bit-by-bit, 
+of some region in memory.
+
+This is called a "shallow" copy.  The 
+exact value of all variables will be copied 
+bit-by-bit. For object variables, that means
+copying just the reference. This results 
+in an incorrect configuration in memory.
+
+To illustrate, let us create an any-dimensional
+integer Point; call it IntVector.
+
+IntVector:
+
+int dim; //dimensions
+
+int [] coords; //actual values of the 
+				//coordinates
+
+
+//example implementation.
+public class IntVector {
+	/**
+	* Dimension (length) of this vector.
+	*/
+	private int dim;
+	
+	/**
+	* The coordinates of this vector.
+	*/
+	private int[] coords;  
+	
+	/**
+	* Constructs a zero vector of the given dimension.
+	* @param dimension
+	* @throws IllegalArgumentException if the dimension is less than
+	* or equal to zero
+	*/
+	public IntVector(int dimension)
+	{
+		if (dimension <= 0) 
+			throw new IllegalArgumentException();
+		dim = dimension;
+		coords = new int[dim]; // default to all zeros
+	}
+	//more methods here
+	public setCoords(int dim, int [] coords){...}
+}
+
+
+
+
+
+Visualizing a direct copy of the class: example starting 
+on p. 5 of 07.pdf, also in 06.pdf.
+
+IntVector v = new IntVector(3);
+v.setCoords(3, coordArray); //inside we have
+							//3,4,5
+
+
+We have taken the implementation of  the Point.clone() method and made it 
+IntVector.clone(), the result will be 
+incorrect.
+
+IntVector w = v.clone();  //creates a Frankenstein!
+
+Fix:
+@Override 
+public IntVector clone(){
+	IntVector copy = null;
+	try{ //Lock 2: try-catch
+		copy = (IntVector) super.clone();
+				
+		//manually copy any nested objects:
+		copy.coords = new int[dim];
+		for (int i = 0; i < dim; i++)
+			copy.coords[i] = this.coords[i];
+
+	} catch (CloneNotSupportedException e) {
+		//no need to write anything here 
+		//because that exception is just 
+		//to prevent clone() from executing.
+	}
+	return copy;
+}
+
+
+
+If the object does not contain nested objects, 
+then clone() works great without modifications.
+
+
+
+The use case is large but shallow object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Correct deep copy implementation.
+public IntVector(IntVector existing)
+{
+	
+	dim = existing.dim;   
+	coords = new int[dim]; 
+	for (int i = 0; i < dim; ++i) 
+	{							
+		coords[i] = existing.coords[i];
+	}
+}
+
+
+
+
+

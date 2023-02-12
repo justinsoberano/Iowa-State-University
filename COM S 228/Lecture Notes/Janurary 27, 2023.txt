@@ -1,0 +1,351 @@
+Lecture 05
+
+Logistics
+=========
+-new zyBooks exercise, will have one each 
+lecture until lecture 12
+
+Material
+=========
+1. Continuing examples of static typing vs dynamic binding
+ 
+ 
+2.  We have class, object and  
+
+Java.lang.Object.
+	--this is the root of the Java hierarchy
+-toString()
+-getClass()
+-others
+
+-primitive vs object types
+
+-----------------
+What we want to know is: is a command 
+allowed; if it is, which implementation 
+will execute; if not, what part of Java will 
+deny it: compiler or runtime?
+
+Polymorphism: behavior that differs even 
+though we call the same method signature.
+
+Dynamic binding:
+1. Any descendant can substitute for 
+an ancestor class.
+2. If we have multiple implementations 
+of the same method in an inheritance chain,
+Java only allows us to see and use the 
+MOST RECENT implementation.
+
+
+
+Examples
+ 1. 		
+		Locomotion l; //OK to 
+			//create an empty abstract reference
+			//and later assign to it 
+			//concrete descendant objects.
+			//The abstract reference 
+			//only sees its own methods, 
+			//and not the descendant's 
+			//additional methods.
+
+
+
+		Grasshopper g; //OK but is abstract.
+	
+2. 
+		Pollination p = new Pollination(); 
+			//Compile-time error:
+			//Cannot instantiate abstract
+			//type Pollination.
+
+		
+ 		Insect i = new Insect(3, "Green"); 
+			//Compile-time error:
+			//Cannot instantiate abstract
+			//type Insect.
+			
+		Insect i = new Grasshopper(2, "Brown");  
+			//Compile-time error:
+			//Cannot instantiate abstract
+			//type Grasshopper.
+
+		
+3. 
+		Katydid k = new Katydid(3, "Green"); 
+			//OK
+
+		Grasshopper g = k; 
+			//OK because we assign a 
+			//descendant to an ancestor reference
+		
+		Locomotion l = new Katydid(3, "Brown"); 
+			//OK because concrete grandchild
+
+		g = l;   //Compile-time error:
+			//Incompatible types.
+
+
+		
+		g = (Katydid) l; //Can tell 
+		//the compiler to accept a runtime 
+		//descendant. Compiler checks 
+		//if the cast is legal, meaning 
+		//the new type is a descendant 
+		//of the old type, and allows it.
+		//There is a second check, which 
+		//is if Katydid is descendant of 
+		//Grasshopper, which it is. 
+		//OK.
+				
+
+
+
+4. 		
+		Grasshopper g = new Locust(3, "Red"); 
+			//OK because concrete child.
+
+
+		Katydid k = (Katydid) g;  
+			//Compiler checks if Katydid 
+			//is compatible with Grasshopper.
+			//It is.
+			//Compiler then checks 
+			//if Katydid is compatible with 
+			//the Katydid reference, which 
+			//it is. This line is allowed 
+			//and the program is compiled.
+			//If this code executes during 
+			//runtime, the runtime will 
+			//observe that the type of the 
+			//object is Locust, which is 
+			//a sibling of Katydid, and will 
+			//throw a ClassCastException.
+			Translated to English: "I cannot 
+			assign incompatible types, even 
+			though you are trying to force 
+			me to."
+			
+			
+		g = new Mantis(4, "Green"); 
+		//Compile-time error: 
+		//incompatible types.
+			Meaning
+			Cannot assign a sibling to 
+			a sibling's reference.
+
+		
+5.   
+		Locomotion l = new Katydid(3, "Brown"); 
+				//OK because concrete grandchild
+
+
+		l.attack();   
+			//Compile-time error:
+			//method attack() undefined for 
+			//type Locomotion.
+		
+		((Katydid) l).attack();
+			//"bite" from Grasshopper.
+			//Java uses dynamic binding 
+			//to the most recent implementation.
+		
+
+6. 
+		Locomotion l = new Locust(2, "Black"); 
+			//OK, concrete descendant
+
+
+		l.move();  
+			//"hop"
+
+
+		l = new Bee(1, "Gold", "Hill"); 
+			//We delete the Locust object 
+			//when we reassign the last 
+			//reference pointing to it.
+			//New assignment is OK because 
+			// Bee is a concrete descendant.
+
+		l.move();  
+			//"fly"; polymorphically 
+			//changed behavior of the 
+			//method by changing the implementation.
+		
+
+7.   
+		Insect i = new Katydid(2, "Green"); 
+			//OK, because concrete descendant
+
+
+		i.attack(); 
+			//"bite", dynamically bound 
+			//to the most recent implementation
+			//of attack(), in Grasshopper.
+
+
+		i = new Mantis (4, "Green"); 
+			//delete Katydid by changing 
+			//the last remaining reference 
+			//to a new object, which is 
+			//concrete.
+
+
+		i.attack();  
+			//Polymorphism:
+			//new implementation of the 
+			//same method signature:
+			//"strike"
+
+
+
+		
+8. 
+		Insect k = new Katydid(3, "Green"); 
+			//OK
+
+		
+		k.attack();  
+			//Use Grasshopper's attack():
+			//"bite"
+
+
+		k.antennae();	//Compile-time error:
+			//method antennae() undefined 
+			//for type Insect.
+		
+		
+		((Katydid) k).antennae();
+		//Use Katydid's 
+				//antennae():
+				//"long"
+
+		
+		
+9. Dynamically bind to MOST recent 
+	implementation of a method.
+		Grasshopper g = new Katydid(3, "Golden"); 
+			//OK because concrete descendant.
+
+
+		System.out.println(g.feedOn());   
+			//We have 2 versions of the method,
+			//one prints "grass", the other,
+			//"variety".  Java allows us 
+			//to only see and use the 
+			//MOST RECENT implementation, which 
+			//is "variety", even though 
+			//the variable type is Grasshopper.
+			//This forced selection happens 
+			//at runtime.
+		
+10. 		
+		Pollination p = new Bee(1, "Golden-Black", "Lake"); 
+			//OK because concrete descendant.
+
+		
+		p.getSwarm(); //Compile-time 
+			//error: method getSwarm()
+			//undefined for type Pollination.
+
+		((Bee) p).getSwarm();
+			//"Lake"
+
+		
+		
+11. 		
+	    	Mantis m = new Mantis(5, "Green"); 
+				//OK
+	    	m.move();  
+				//"crawl"
+	    	Insect i = m.preyOn(); 
+				//preyOn() returns a 
+				//Grasshopper reference
+				//pointing to a Locust object.
+				//Compiler checks: Is //Grasshopper a descendant 
+				//of Insect? Yes, so it 
+				//allows the assignment
+				//of the runtime object.
+
+	    	i.move();
+			//Compile-time 
+			//error: method move()
+			//undefined for type Insect.
+
+
+            ((Grasshopper) i).move();
+				//Grasshopper is a descendant
+				//of Insect, so the cast 
+				//is allowed, and it sees
+				//the move method because 
+				//it implements Locomotion.
+				//The compiler will allow 
+				//this line to compile.
+				//At execution time, the 
+				//runtime will dynamically 
+				//choose the MOST RECENT 
+				//implementation of move(),
+				//which is in Grasshopper,
+					//"hop"
+		
+12. 		
+		Insect i = new Mantis(4, "Yellow"); 
+			//OK
+
+
+		((Mantis) i).move();     
+			//OK, "crawl"
+
+
+		((Mantis) i).preyOn().attack();   
+			//Chained method execution:
+			//Evaluated left-to-right;
+			//The leftmost method is 
+			//executed first.  If it returns
+			//an object, the next leftmost 
+			//method is executed on the 
+			//result of the first method.
+
+			//Executing preyOn() returns 
+			//a Locust in a Grasshopper 
+			//reference
+			
+			//Executing attack on the 
+			//Grasshopper reference 
+			//dynamically homes in on 
+			//the MOST RECENT implementation 
+			//of attack(), which is 
+			//in Grasshopper, "bite"
+			
+
+		i = new Bee(1, "Golden-Black", "Hill"); 
+			//deleted Mantis and Bee 
+			//assignment is allowed.
+
+
+		((Bee) i).makeHoney();  
+			//OK, "Orange Blossom"
+		
+13.  Upcasting is allowed but useless.
+
+
+	        Mantis m = new Mantis(4, "Green"); //OK
+
+
+
+        	((Insect) m).attack(); 
+			//Here, the compiler allows 
+			//us to cast  this Mantis as 
+			//an Insect object, because 
+			//they are related.
+			//
+			//At runtime, Java will 
+			//use the latest implementation 
+			//of attack() that it sees in 
+			//memory: this is Mantis' "strike"
+			
+-----------------------------------------
+Primitive variables: int, byte, short, long, float, double, byte, 
+		boolean.
+Object variables visualization: p. 13 of 05.pdf
