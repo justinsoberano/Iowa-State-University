@@ -1,23 +1,28 @@
-
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 // This is for Homework 1 of COM S 228
 // This is the code that I used to test the ArrayOutOfBounds exception
 // This code prevents the exception from happening by checking the bounds of the
 // array and only changing the values of the array if the bounds are not exceeded.
 
 public class ArrayOutOfBounds {
+    
+    public static int[][] globalArray;
     public static void main(String[] args) throws Exception {
         
-        int r = 0;
-        int c = 0;
+        int r = 3;
+        int c = 3;
 
         System.out.println();
         System.out.println("Old Array:");
-        int[][] array = { {0, 0, 0, 0, 0, 0}, 
-                          {0, 0, 0, 0, 0, 0}, 
-                          {0, 0, 0, 0, 0, 0}, 
-                          {0, 0, 0, 0, 0, 0}, 
-                          {0, 0, 0, 0, 0, 0},
-                          {0, 0, 0, 0, 0, 0} };
+        int[][] array = { {1, 2, 3, 4, 1, 0}, 
+                          {2, 2, 2, 3, 1, 0}, 
+                          {1, 1, 2, 1, 4, 3}, 
+                          {2, 2, 1, 2, 4, 4}, 
+                          {0, 1, 2, 0, 3, 4},
+                          {0, 3, 2, 2, 3, 0} };
+
+        globalArray = array;
 
         for(int i = 0; i < array.length; i++) {
             for(int j = 0; j < array[0].length; j++) {
@@ -30,12 +35,17 @@ public class ArrayOutOfBounds {
         System.out.println("New Array:");
 
         int sizeOfArray = array.length - 1;
+        int arraySize = 0;
+        ArrayList<Integer> neighbors = new ArrayList<Integer>();
+
 
         for(int i = - 1; i < 2; i++) {
             for(int j = - 1; j < 2; j++) {
                 if(!((r + j) > sizeOfArray) && !((r + j) < 0) 
                 && !((c + i) > sizeOfArray) && !((c + i) < 0)) {
-                    array[r + j][c + i] = 1;
+                    arraySize++;
+                    neighbors.add(array[r + j][c + i]);
+                    array[r + j][c + i] = 8;
                 }
             }
         }
@@ -49,6 +59,23 @@ public class ArrayOutOfBounds {
 
         System.out.println();
 
+        for(int i = 0; i < neighbors.size(); i++) {
+            System.out.print(neighbors.get(i) + " ");
+        }
+        System.out.println();
+        System.out.println(arraySize);
+        System.out.println();
+
+    }
+
+    public String toString() {
+        for(int i = 0; i < globalArray[0].length; i++) {
+            for(int j = 0; j < globalArray.length; j++) {
+                System.out.print(globalArray[i][j] + " ");
+            }
+            System.out.println();
+        }
+        return "da";
     }
 }
 
