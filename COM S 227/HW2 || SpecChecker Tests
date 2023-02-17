@@ -1,4 +1,38 @@
+package hw2;
+
+import api.BallType;
+import api.PlayerPosition;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import javax.swing.SwingUtilities;
+import org.junit.Assert;
+import org.junit.Test;
+import speccheck.SpecCheck;
+import speccheck.SpecCheckTest;
+
+public class SpecChecker {
+  public static void main(String[] args) {
+    boolean testOnly = (args.length > 0);
+    if (testOnly) {
+      String result = SpecCheck.grade(SpecChecker.class);
+      System.out.println(result);
+    } else {
+      SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+              SpecCheck.testAndZip(SpecChecker.class, "SUBMIT_THIS_hw2", "hw2", new String[] { "src/hw2/ThreeCushion.java" });
+            }
+          });
+    } 
+  }
   
+  public void initializationError() {
+    System.out.println("foo");
+  }
   
   @Test
   @SpecCheckTest(msg = "1. For new ThreeCushion, inning should be 1 ", nPoints = 1)
@@ -850,3 +884,367 @@
     Assert.assertEquals(1L, game.getInning());
   }
   
+  public static String getModifierDiff(int expected, int actual) {
+    String msg = "";
+    if (Modifier.isStatic(expected) != Modifier.isStatic(actual))
+      msg = String.valueOf(msg) + "It should " + (Modifier.isStatic(actual) ? "not " : "") + "be static. "; 
+    if (Modifier.isPublic(expected) != Modifier.isPublic(actual))
+      msg = String.valueOf(msg) + "It should " + (Modifier.isPublic(actual) ? "not " : "") + "be public. "; 
+    if (Modifier.isProtected(expected) != Modifier.isProtected(actual))
+      msg = String.valueOf(msg) + "It should " + (Modifier.isProtected(actual) ? "not " : "") + "be protected. "; 
+    if (Modifier.isPrivate(expected) != Modifier.isPrivate(actual))
+      msg = String.valueOf(msg) + "It should " + (Modifier.isPrivate(actual) ? "not " : "") + "be private. "; 
+    if (Modifier.isFinal(expected) != Modifier.isFinal(actual))
+      msg = String.valueOf(msg) + "It should " + (Modifier.isFinal(actual) ? "not " : "") + "be final. "; 
+    if (Modifier.isInterface(expected) != Modifier.isInterface(actual))
+      msg = String.valueOf(msg) + "It should " + (Modifier.isInterface(actual) ? "not " : "") + "be interface. "; 
+    return msg;
+  }
+  
+  private static String getTypesList(Class[] types) {
+    String list = "";
+    if (types.length > 0) {
+      list = String.valueOf(list) + types[0].getCanonicalName() + ".class";
+      for (int i = 1; i < types.length; i++)
+        list = String.valueOf(list) + ", " + types[i].getCanonicalName() + ".class"; 
+    } 
+    return list;
+  }
+  
+  @SpecCheckTest(order = 0, msg = "MISSING CLASS")
+  @Test
+  public void testForClasses() throws Exception {
+    try {
+      Class.forName("hw2.ThreeCushion");
+    } catch (ClassNotFoundException e) {
+      Assert.fail("A class by the name of hw2.ThreeCushion could not be found. Check case, spelling, and that you created your class in the right package.");
+    } 
+  }
+  
+  @SpecCheckTest(order = 10, msg = "Class does not conform to specification")
+  @Test
+  public void testHw2ThreeCushion() throws Exception {
+    try {
+      Class<?> cls = Class.forName("hw2.ThreeCushion");
+      Assert.assertTrue("The modifiers for class hw2.ThreeCushion are not correct. " + getModifierDiff(1, cls.getModifiers()), (1 == cls.getModifiers()));
+    } catch (ClassNotFoundException e) {
+      Assert.fail("A class by the name of hw2.ThreeCushion could not be found. Check case, spelling, and that you created your class in the right package.");
+    } 
+    Field field = null;
+    LinkedList<Field> fields = new LinkedList<>();
+    byte b1;
+    int i;
+    Field[] arrayOfField;
+    for (i = (arrayOfField = Class.forName("hw2.ThreeCushion").getDeclaredFields()).length, b1 = 0; b1 < i; ) {
+      Field actual = arrayOfField[b1];
+      fields.add(actual);
+      b1++;
+    } 
+    for (Field actual : fields) {
+      if (Modifier.isStatic(actual.getModifiers())) {
+        Assert.assertTrue(String.format("Field hw2.ThreeCushion.%1$s is not in the specification. Any static fields you add should be private.", new Object[] { actual.getName() }), !(!Modifier.isPrivate(actual.getModifiers()) && !Modifier.isProtected(actual.getModifiers())));
+        continue;
+      } 
+      Assert.assertTrue("Instance variables must be private. hw2.ThreeCushion." + actual.getName() + " is not. ", Modifier.isPrivate(actual.getModifiers()));
+    } 
+    List<Class<?>> exceptions = null;
+    List<Class<?>> outlawedExceptions = null;
+    Constructor<?> ctor = null;
+    try {
+      ctor = Class.forName("hw2.ThreeCushion").getDeclaredConstructor(new Class[] { PlayerPosition.class, int.class });
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a constructor in class hw2.ThreeCushion taking 2 arguments, having types api.PlayerPosition, int.");
+    } 
+    Assert.assertTrue("The modifiers for constructor hw2.ThreeCushion(api.PlayerPosition, int) are not correct. " + getModifierDiff(1, ctor.getModifiers()), (1 == ctor.getModifiers()));
+    exceptions = Arrays.asList(ctor.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires constructor hw2.ThreeCushion(api.PlayerPosition, int) to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    LinkedList<Constructor<?>> ctors = new LinkedList<>();
+    byte b2;
+    int j;
+    Constructor[] arrayOfConstructor;
+    for (j = (arrayOfConstructor = (Constructor[])Class.forName("hw2.ThreeCushion").getDeclaredConstructors()).length, b2 = 0; b2 < j; ) {
+      Constructor<?> actual = arrayOfConstructor[b2];
+      ctors.add(actual);
+      b2++;
+    } 
+    try {
+      ctor = Class.forName("hw2.ThreeCushion").getDeclaredConstructor(new Class[] { PlayerPosition.class, int.class });
+      ctors.remove(ctor);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    for (Constructor<?> actual : ctors) {
+      if (Modifier.isPublic(actual.getModifiers()) && (actual.getParameterTypes()).length != 0)
+        Assert.fail(String.format("Constructor %1$s(%2$s) is not in the specification. Any constructors you add should be private (or possibly protected).", new Object[] { actual.getName(), getTypesList(actual.getParameterTypes()).replaceAll(".class", "") })); 
+    } 
+    Method method = null;
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("toString", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a toString method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method toString() in class hw2.ThreeCushion has the wrong return type.", String.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method toString() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method toString() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isBreakShot", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a isBreakShot method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method isBreakShot() in class hw2.ThreeCushion has the wrong return type.", boolean.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method isBreakShot() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method isBreakShot() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isShotStarted", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a isShotStarted method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method isShotStarted() in class hw2.ThreeCushion has the wrong return type.", boolean.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method isShotStarted() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method isShotStarted() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isInningStarted", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a isInningStarted method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method isInningStarted() in class hw2.ThreeCushion has the wrong return type.", boolean.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method isInningStarted() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method isInningStarted() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("cueBallStrike", new Class[] { BallType.class });
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a cueBallStrike method in class hw2.ThreeCushion taking 1 argument, having type api.BallType.");
+    } 
+    Assert.assertEquals("Your method cueBallStrike(api.BallType) in class hw2.ThreeCushion has the wrong return type.", void.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method cueBallStrike(api.BallType) in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method cueBallStrike(api.BallType) in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("lagWinnerChooses", new Class[] { boolean.class, BallType.class });
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a lagWinnerChooses method in class hw2.ThreeCushion taking 2 arguments, having types boolean, api.BallType.");
+    } 
+    Assert.assertEquals("Your method lagWinnerChooses(boolean, api.BallType) in class hw2.ThreeCushion has the wrong return type.", void.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method lagWinnerChooses(boolean, api.BallType) in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method lagWinnerChooses(boolean, api.BallType) in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("cueStickStrike", new Class[] { BallType.class });
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a cueStickStrike method in class hw2.ThreeCushion taking 1 argument, having type api.BallType.");
+    } 
+    Assert.assertEquals("Your method cueStickStrike(api.BallType) in class hw2.ThreeCushion has the wrong return type.", void.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method cueStickStrike(api.BallType) in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method cueStickStrike(api.BallType) in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("cueBallImpactCushion", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a cueBallImpactCushion method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method cueBallImpactCushion() in class hw2.ThreeCushion has the wrong return type.", void.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method cueBallImpactCushion() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method cueBallImpactCushion() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getPlayerAScore", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a getPlayerAScore method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method getPlayerAScore() in class hw2.ThreeCushion has the wrong return type.", int.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method getPlayerAScore() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method getPlayerAScore() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getPlayerBScore", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a getPlayerBScore method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method getPlayerBScore() in class hw2.ThreeCushion has the wrong return type.", int.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method getPlayerBScore() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method getPlayerBScore() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getInningPlayer", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a getInningPlayer method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method getInningPlayer() in class hw2.ThreeCushion has the wrong return type.", PlayerPosition.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method getInningPlayer() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method getInningPlayer() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("foul", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a foul method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method foul() in class hw2.ThreeCushion has the wrong return type.", void.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method foul() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method foul() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("endShot", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a endShot method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method endShot() in class hw2.ThreeCushion has the wrong return type.", void.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method endShot() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method endShot() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getInning", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a getInning method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method getInning() in class hw2.ThreeCushion has the wrong return type.", int.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method getInning() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method getInning() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getCueBall", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a getCueBall method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method getCueBall() in class hw2.ThreeCushion has the wrong return type.", BallType.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method getCueBall() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method getCueBall() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isBankShot", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a isBankShot method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method isBankShot() in class hw2.ThreeCushion has the wrong return type.", boolean.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method isBankShot() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method isBankShot() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isGameOver", new Class[0]);
+    } catch (NoSuchMethodException e) {
+      Assert.fail("You need a isGameOver method in class hw2.ThreeCushion taking 0 arguments.");
+    } 
+    Assert.assertEquals("Your method isGameOver() in class hw2.ThreeCushion has the wrong return type.", boolean.class, method.getReturnType());
+    Assert.assertTrue("The modifiers for method isGameOver() in class hw2.ThreeCushion are not correct. " + getModifierDiff(1025, method.getModifiers()), !(1025 != method.getModifiers() && 1 != method.getModifiers()));
+    exceptions = Arrays.asList(method.getExceptionTypes());
+    outlawedExceptions = Arrays.asList(new Class[0]);
+    for (Class<?> exception : exceptions)
+      Assert.assertFalse("The specification requires method isGameOver() in class hw2.ThreeCushion to handle and not throw " + exception.getName() + ".", outlawedExceptions.contains(exception)); 
+    LinkedList<Method> methods = new LinkedList<>();
+    byte b3;
+    int k;
+    Method[] arrayOfMethod;
+    for (k = (arrayOfMethod = Class.forName("hw2.ThreeCushion").getDeclaredMethods()).length, b3 = 0; b3 < k; ) {
+      Method m = arrayOfMethod[b3];
+      methods.add(m);
+      b3++;
+    } 
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("toString", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isBreakShot", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isShotStarted", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isInningStarted", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("cueBallStrike", new Class[] { BallType.class });
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("lagWinnerChooses", new Class[] { boolean.class, BallType.class });
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("cueStickStrike", new Class[] { BallType.class });
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("cueBallImpactCushion", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getPlayerAScore", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getPlayerBScore", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getInningPlayer", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("foul", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("endShot", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getInning", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("getCueBall", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isBankShot", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    try {
+      method = Class.forName("hw2.ThreeCushion").getDeclaredMethod("isGameOver", new Class[0]);
+      methods.remove(method);
+    } catch (NoSuchMethodException noSuchMethodException) {}
+    for (Method m : methods) {
+      if (!m.isBridge() && !m.isSynthetic() && !Modifier.isPrivate(m.getModifiers()) && !Modifier.isProtected(m.getModifiers()) && !m.getName().equals("main"))
+        Assert.fail(String.format("Method hw2.ThreeCushion.%1$s(%2$s) is not in the specification. Any methods you add should be private (or possibly protected).", new Object[] { m.getName(), getTypesList(m.getParameterTypes()).replaceAll(".class", "") })); 
+    } 
+  }
+}
