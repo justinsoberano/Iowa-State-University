@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 // This is for Homework 1 of COM S 228
 // This is the code that I used to test the ArrayOutOfBounds exception
@@ -10,17 +9,14 @@ public class ArrayOutOfBounds {
     public static int[][] globalArray;
     public static void main(String[] args) throws Exception {
         
-        int r = 3;
-        int c = 3;
+        int row = 0;
+        int column = 1;
 
         System.out.println();
         System.out.println("Old Array:");
-        int[][] array = { {1, 2, 3, 4, 1, 0}, 
-                          {2, 2, 2, 3, 1, 0}, 
-                          {1, 1, 2, 1, 4, 3}, 
-                          {2, 2, 1, 2, 4, 4}, 
-                          {0, 1, 2, 0, 3, 4},
-                          {0, 3, 2, 2, 3, 0} };
+        int[][] array = { {1, 2, 3},
+                          {4, 5, 6},
+                          {7, 8, 9} };
 
         globalArray = array;
 
@@ -39,13 +35,22 @@ public class ArrayOutOfBounds {
         ArrayList<Integer> neighbors = new ArrayList<Integer>();
 
 
-        for(int i = - 1; i < 2; i++) {
-            for(int j = - 1; j < 2; j++) {
-                if(!((r + j) > sizeOfArray) && !((r + j) < 0) 
-                && !((c + i) > sizeOfArray) && !((c + i) < 0)) {
-                    arraySize++;
-                    neighbors.add(array[r + j][c + i]);
-                    array[r + j][c + i] = 8;
+        // for(int i = - 1; i < 2; i++) {
+        //     for(int j = - 1; j < 2; j++) {
+        //         if(!((row + j) > sizeOfArray) && !((row + j) < 0) 
+        //         && !((column + i) > sizeOfArray) && !((column + i) < 0)) {
+        //             arraySize++;
+        //             neighbors.add(array[row + j][column + i]);
+        //             array[row + j][column + i] = 8;
+        //         }
+        //     }
+        // }
+
+        for(int i = - 1; i < 2; i++) {								
+            for(int j = - 1; j < 2; j++) {	
+                if(!((row + j) > sizeOfArray) && !((row + j) < 0) 		
+                && !((column + i) > sizeOfArray) && !((column + i) < 0)) {	
+                    array[row + j][column + i] = 8;
                 }
             }
         }

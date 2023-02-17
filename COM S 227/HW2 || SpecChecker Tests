@@ -1,0 +1,852 @@
+  
+  
+  @Test
+  @SpecCheckTest(msg = "1. For new ThreeCushion, inning should be 1 ", nPoints = 1)
+  public void test1() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    Assert.assertEquals(1L, game.getInning());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "2. Player A wins lag and chooses break shot for self, inning player should be A ", nPoints = 1)
+  public void test2() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    Assert.assertEquals(PlayerPosition.PLAYER_A, game.getInningPlayer());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "3. Player A wins lag and chooses break shot for other, inning player should be B ", nPoints = 1)
+  public void test3() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(false, BallType.WHITE);
+    Assert.assertEquals(PlayerPosition.PLAYER_B, game.getInningPlayer());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "4. Player B wins lag and chooses break shot for self, inning player should be B ", nPoints = 1)
+  public void test4() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    Assert.assertEquals(PlayerPosition.PLAYER_B, game.getInningPlayer());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "5. Player A wins lag and chooses break shot and white, current cue ball should be white ", nPoints = 1)
+  public void test5() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    Assert.assertEquals(BallType.WHITE, game.getCueBall());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "6. Player A wins lag and chooses B to break and white cue for self, current cue ball should be yellow ", nPoints = 1)
+  public void test6() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(false, BallType.WHITE);
+    Assert.assertEquals(BallType.YELLOW, game.getCueBall());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "7. Lag winner makes selections, isBreakShot() should return true ", nPoints = 1)
+  public void test7() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(true), Boolean.valueOf(game.isBreakShot()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "8. Before first shot, isInningStarted() should return false ", nPoints = 1)
+  public void test8() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isInningStarted()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "9. Before first shot, isShotStarted() should return false ", nPoints = 1)
+  public void test9() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isShotStarted()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "10. Start of first shot, isBreakShot() should return true ", nPoints = 1)
+  public void test10() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(true), Boolean.valueOf(game.isBreakShot()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "11. Start of first shot, isInningStrated() should return true ", nPoints = 1)
+  public void test11() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(true), Boolean.valueOf(game.isInningStarted()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "12. Start of first shot, isGameOver() should return false ", nPoints = 1)
+  public void test12() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isGameOver()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "13. Start of first shot, isShotStarted() should return true ", nPoints = 1)
+  public void test13() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(true), Boolean.valueOf(game.isShotStarted()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "14. Start of first shot, player A score should be 0 ", nPoints = 1)
+  public void test14() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(0L, game.getPlayerAScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "15. Start of first shot, player B score should be 0 ", nPoints = 1)
+  public void test15() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(0L, game.getPlayerAScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "16. On break shot: Player A cue stick to choosen white cue ball, strike red, impact cushion 3 times, strike yellow, end shot; Player A should have 1 point ", nPoints = 1)
+  public void test16() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    Assert.assertEquals(1L, game.getPlayerAScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "17. On break shot: Player A cue stick to choosen white cue ball, strike red, impact cushion 3 times, strike yellow, end shot; Player B should have 0 points ", nPoints = 1)
+  public void test17() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    Assert.assertEquals(0L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "18. On break shot: Player B cue stick to choosen white cue ball, strike red, impact cushion 3 times, strike yellow, end shot; Player B should have 1 point ", nPoints = 1)
+  public void test18() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    Assert.assertEquals(1L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "19. On break shot: Player B cue stick to choosen white cue ball, strike red, impact cushion 3 times, strike yellow, end shot; Player A should have 0 points ", nPoints = 1)
+  public void test19() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    Assert.assertEquals(0L, game.getPlayerAScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "20. On break shot: Player A cue stick to choosen yellow cue ball, strike red, impact cushion 3 times, strike white, end shot; Player A should have 1 point ", nPoints = 1)
+  public void test20() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    Assert.assertEquals(1L, game.getPlayerAScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "21. On break shot: Player A cue stick to choosen yellow cue ball, strike red, impact cushion 3 times, strike white, end shot; Player B should have 0 points ", nPoints = 1)
+  public void test21() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    Assert.assertEquals(0L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "22. On break shot: Player B cue stick to choosen yellow cue ball, strike red, impact cushion 3 times, strike white, end shot; Player B should have 1 point ", nPoints = 1)
+  public void test22() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    Assert.assertEquals(1L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "23. On break shot: Player B cue stick to choosen yellow cue ball, strike red, impact cushion 3 times, strike white, end shot; Player A should have 0 points ", nPoints = 1)
+  public void test23() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    Assert.assertEquals(0L, game.getPlayerAScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "24. On break shot: Player A cue stick to NOT choosen ball yellow, strike red, impact cushion 3 times, strike white, end shot; Player A should have 0 points ", nPoints = 1)
+  public void test24() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    Assert.assertEquals(0L, game.getPlayerAScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "25. On break shot: Player A cue stick to NOT choosen ball yellow, strike red, impact cushion 3 times, strike white, end shot; getInning() should return 2 ", nPoints = 1)
+  public void test25() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    Assert.assertEquals(2L, game.getInning());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "26. On break shot: Player A cue stick to choosen ball yellow, strike white, impact cushion 3 times, strike red, end shot; getInning() should return 2 ", nPoints = 1)
+  public void test26() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(2L, game.getInning());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "27. On break shot: Player A cue stick to choosen ball yellow, strike white; getInning() should return 2 ", nPoints = 1)
+  public void test27() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.WHITE);
+    Assert.assertEquals(2L, game.getInning());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "28. On break shot: Player A cue stick to choosen ball white; getCueBall() should return WHITE ", nPoints = 1)
+  public void test28() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(BallType.WHITE, game.getCueBall());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "29. On break shot: Player A cue stick to choosen ball yellow, strike white (this is a foul, Rule 3a); getCueBall() should return WHITE ", nPoints = 1)
+  public void test29() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.WHITE);
+    Assert.assertEquals(BallType.WHITE, game.getCueBall());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "30. On break shot: Player A cue stick to choosen ball WHITE, impact cushion, strike red (note RULE 3a, must strike red directly, not by cushion); getCueBall() should return YELLOW ", nPoints = 1)
+  public void test30() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.RED);
+    Assert.assertEquals(BallType.YELLOW, game.getCueBall());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "31. On normal shot with Player B starting score 1: Player B cue stick to yellow cue ball, strike white, impact cushion 3 times, strike red, end shot; Player B score should be 2 ", nPoints = 1)
+  public void test31() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(2L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "32. On normal shot with Player B starting score 1: Player B cue stick to yellow cue ball, impact cushion 3 times, strike white, strike red, end shot; Player B score should be 2 ", nPoints = 1)
+  public void test32() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(2L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "33. On normal shot with Player B starting score 1: Player B cue stick to yellow cue ball, impact cushion, strike white, impact cushion 2 times, strike red, end shot; Player B score should be 2 ", nPoints = 1)
+  public void test33() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(2L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "34. On normal shot with Player B starting score 1: Player B cue stick to yellow cue ball, impact cushion, strike white, impact cushion, strike white, impact cushion, strike red, end shot; Player B score should be 2 ", nPoints = 1)
+  public void test34() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(2L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "35. On normal shot with Player B starting score 1: Player B cue stick to yellow cue ball, impact cushion 3 times, strike red, strike white, end shot; Player B score should be 2 ", nPoints = 1)
+  public void test35() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(2L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "36. On normal shot with Player B starting score 1: Player B cue stick to yellow cue ball, impact cushion 2 times, strike red, strike white, impact cushion, end shot; Player B score should be 1 ", nPoints = 1)
+  public void test36() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.endShot();
+    Assert.assertEquals(1L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "37. On normal shot with Player B starting score 1: Player B cue stick to yellow cue ball, end shot; Player B score should be 1 ", nPoints = 1)
+  public void test37() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.endShot();
+    Assert.assertEquals(1L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "38. On normal shot with Player B starting score 1: Player B cue stick to yellow cue ball, call foul(), impact cushion 3 times, strike white, strike red, end shot; Player B score should be 1 ", nPoints = 1)
+  public void test38() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.foul();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(1L, game.getPlayerBScore());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "39. On normal shot with Player B starting inning 1: Player B cue stick to yellow cue ball, call foul(), impact cushion 3 times, strike white, strike red, end shot; inning should be 2 ", nPoints = 1)
+  public void test39() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.foul();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(2L, game.getInning());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "40. After call to foul(), isInningStarted() should return false ", nPoints = 1)
+  public void test40() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.foul();
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isInningStarted()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "41. After call to endShot(), isShotStarted() should return false ", nPoints = 1)
+  public void test41() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.endShot();
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isShotStarted()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "42. Starting at inning 1: call to foul(), call to endShot(): getInning() should return 2 ", nPoints = 1)
+  public void test42() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.foul();
+    game.endShot();
+    Assert.assertEquals(2L, game.getInning());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "43. On normal shot: Player B cue stick to yellow cue ball, impact cushion 3 times, strike white, strike red, end shot; isBankShot() should return true ", nPoints = 1)
+  public void test43() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.YELLOW);
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.endShot();
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(Boolean.valueOf(true), Boolean.valueOf(game.isBankShot()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "44. On normal shot: Player B cue stick to white cue ball, impact cushion 3 times, strike red, strike yellow, end shot; isBankShot() should return true ", nPoints = 1)
+  public void test44() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.RED);
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    Assert.assertEquals(Boolean.valueOf(true), Boolean.valueOf(game.isBankShot()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "45. On normal shot: Player B cue stick to white cue ball, impact cushion 3 times, strike red, strike red, end shot; isBankShot() should return false ", nPoints = 1)
+  public void test45() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.RED);
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isBankShot()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "46. On normal shot: Player B cue stick to white cue ball, strike yellow, impact cushion 3 times, strike red, end shot; isBankShot() should return false ", nPoints = 1)
+  public void test46() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.YELLOW);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isBankShot()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "47. On normal shot: Player B cue stick to white cue ball, call foul(); getInningPlayer should return Player A ", nPoints = 1)
+  public void test47() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.foul();
+    Assert.assertEquals(PlayerPosition.PLAYER_A, game.getInningPlayer());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "48. On normal shot: Player B cue stick to white cue ball, call endShot(); getInningPlayer should return Player A ", nPoints = 1)
+  public void test48() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.endShot();
+    Assert.assertEquals(PlayerPosition.PLAYER_A, game.getInningPlayer());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "49. On normal shot: Player B cue stick to white cue ball, impact cusion 3 times, strike yellow, strike red, call endShot(); getInningPlayer should return Player B ", nPoints = 1)
+  public void test49() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(PlayerPosition.PLAYER_B, game.getInningPlayer());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "50. On normal shot isGameOver() should return false ", nPoints = 1)
+  public void test50() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isGameOver()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "51. Game points to win set to 2, player A makes two shots, isGameOver() should return true ", nPoints = 1)
+  public void test51() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 2);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    Assert.assertEquals(Boolean.valueOf(true), Boolean.valueOf(game.isGameOver()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "52. Player A with white cue ball: cue stick strikes white, call foul(), cue stick strikes yellow, impact cushions 3 times, strike white, strike red, end shot; getInningPlayer() should return Player A ", nPoints = 1)
+  public void test52() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 2);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.foul();
+    game.cueStickStrike(BallType.YELLOW);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.endShot();
+    Assert.assertEquals(PlayerPosition.PLAYER_A, game.getInningPlayer());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "53. Game is over: cue stick strick cue ball; shot started should be false ", nPoints = 1)
+  public void test53() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 2);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isShotStarted()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "54. Game is over: cue stick strick cue ball; inning started should be false ", nPoints = 1)
+  public void test54() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 2);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    Assert.assertEquals(Boolean.valueOf(false), Boolean.valueOf(game.isInningStarted()));
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "55. Game is over with inning count 1: call foul(); getInning() should return 1 ", nPoints = 1)
+  public void test55() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 2);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.cueStickStrike(BallType.WHITE);
+    game.cueBallStrike(BallType.RED);
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallImpactCushion();
+    game.cueBallStrike(BallType.YELLOW);
+    game.endShot();
+    game.foul();
+    Assert.assertEquals(1L, game.getInning());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "56. Inning is 1: call foul(); getInning() should return 2 ", nPoints = 1)
+  public void test56() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 2);
+    game.lagWinnerChooses(true, BallType.WHITE);
+    game.foul();
+    Assert.assertEquals(2L, game.getInning());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "57. Before lag winner makes selections: call foul(); getInning() should return 1 ", nPoints = 1)
+  public void test57() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 2);
+    game.foul();
+    Assert.assertEquals(1L, game.getInning());
+  }
+  
+  @Test
+  @SpecCheckTest(msg = "58. Before lag winner makes selections: call endShot(); getInning() should return 1 ", nPoints = 1)
+  public void test58() {
+    ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_A, 2);
+    game.endShot();
+    Assert.assertEquals(1L, game.getInning());
+  }
+  
