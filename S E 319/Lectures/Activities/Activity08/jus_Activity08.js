@@ -87,5 +87,31 @@ let minProduct_Object = {"minProductId": "",
 
 minPrice_usingObject(minProduct_Object, products);
 
-console.log(minProduct_Object);
+console.log(`Report product with minimum price again :
+        Product Id : ${minProduct_Object["minProductId"]}
+        Product Name : ${minProduct_Object["minProductName"]}
+        Description  : ${minProduct_Object["shortDescription"]}
+        Price : ${minProduct_Object["price"]}`);
 
+
+        function per_products(sales_per_product_name, products){
+            for(let product of products){
+                if(sales_per_product_name.hasOwnProperty(product[1]))
+                    sales_per_product_name[product[1]] = Number(sales_per_product_name[product[1]]) + Number(product[6]);
+                else
+                    sales_per_product_name[product[1]] = Number(product[6]);
+            }
+        }
+
+
+
+        let sales_per_product_name = {};
+
+        per_products(sales_per_product_name, products);
+
+        console.log(sales_per_product_name);
+
+        console.log(`Report Sales per Product Name :`);
+        for (let name in sales_per_product_name)
+        console.log(`Product Name : ${name} Sales : ${sales_per_product_name[name]}`);
+        

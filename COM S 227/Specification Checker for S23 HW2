@@ -295,7 +295,7 @@ public class SpecChecker {
   }
   
   @Test
-  @SpecCheckTest(msg = "25. On break shot: Player A cue stick to NOT choosen ball yellow, strike red, impact cushion 3 times, strike white, end shot; getInning() should return 2 ", nPoints = 1)
+  @SpecCheckTest(msg = "25. On break shot: Player A cue stick to NOT choosen ball yellow, strike red, impact cushion 3 times, strike white, end shot; getInning() should return 2", nPoints = 1)
   public void test25() {
     ThreeCushion game = new ThreeCushion(PlayerPosition.PLAYER_B, 40);
     game.lagWinnerChooses(true, BallType.WHITE);
