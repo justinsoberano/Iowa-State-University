@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The Document Object</h1>
+<h2>The forms Property</h2>
+
+<form id="my_form">
+    <p>First Name: <input type="text" name="fname" value="Donald"></p>
+    <p>Last Name: <input type="text" name="lname" value="Duck"></p>
+    
+    <button type="button" onclick="getInputValue();">Get Value</button>
+</form>
+
+<p>The full name entered is : <span id="demoFName"></span>, <span id="demoLName"></span> </p>
+
+<script>
+    function getInputValue(){
+        // Get the values form input form :
+        let myFirstName = document.forms["my_form"]["fname"];
+        let myLastName = document.forms["my_form"]["lname"];
+        let firstNameEntered = myFirstName.value;
+        let lastNameEntered = myLastName.value;
+
+        // Show the new values in HTML :
+        let fn = document.getElementById("demoFName");
+        fn.innerHTML = firstNameEntered;
+        let ln = document.getElementById("demoLName");
+        ln.innerHTML = lastNameEntered;
+
+        // Show the new values in console :
+        console.log(firstNameEntered);
+        console.log(lastNameEntered);
+    }
+</script>
+
+</body>
+</html>
