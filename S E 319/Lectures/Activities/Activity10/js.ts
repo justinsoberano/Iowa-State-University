@@ -1,13 +1,14 @@
-function myresolve(t) {
-    return "Sucess!! Promise waited [" + t + "]ms";
-}
+
 function sleep(t) {
-    let mypromise = new Promise((resolve, reject) => {
-        setTimeout(() => { resolve(myresolve(t)) }, t)
+    return new Promise((resolve, reject) => {
+        if(t <= 3000) {
+            throw new Error("Timer is invalid");
+        }
+        setTimeout(() => {resolve("I Am Done")}, t);
     });
-    mypromise.then(
-        result => alert(result),
-        error => alert(error)
-    );
 }
-sleep(3000);
+
+sleep(3000).then(
+    result=> console.log("Result in then:" + result),
+    error=> console.log("Error in then:" + error)
+)
