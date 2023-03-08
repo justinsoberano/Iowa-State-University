@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p id="p" onmouseover="increaseFont()" onmouseout="decreaseFont()">Here test fontsize</p>
+
+    <div id="windowload">Div to test windowload.</div>
+
+    <img id="turtle" src="turtle.webp" alt="turtle" style="width:200px">
+
+    <script>
+
+        // This is used by the the <p> tag and it will increase the font size on mouse hover
+        function increaseFont() {
+            let p = document.getElementById("p");
+            p.setAttribute("style", "font-size:32px");
+        }
+
+        // same thing as above but opposite. 
+        function decreaseFont() {
+            let p = document.getElementById("p");
+            p.setAttribute("style", "font-size:16px");
+        }
+
+        // This is used to add animations when a webpage loads
+        window.addEventListener("load", () => {
+            let div = document.getElementById("windowload");
+            div.innerHTML = "<h1 style='font-size:48px'>Hi everybody !! </h1>";
+        });
+
+        // Outputs the key pressed onto the screen using the windowLoad element ID.
+        window.addEventListener("keydown", (event) => {
+            let div = document.getElementById("windowload");
+            div.innerHTML = `<h1 style='font-size:48px'>${event.key} pressed.</h1> `;
+        });
+
+        // Resizes the turtle image and makes it larger whe pressed. 
+        const turtleUp = document.getElementById('turtle');
+        turtleUp.addEventListener('click', event => {
+            turtleUp.setAttribute("style", "width:350px");
+        });
+
+        //Makes the turtle smaller when the right button, which brings up the context menu.
+        const turtleDown = document.getElementById('turtle');
+        turtleDown.addEventListener('contextmenu', event => {
+            turtleDown.setAttribute("style", "width:200px");
+        });
+
+    </script>
+
+</body>
+
+</html>
