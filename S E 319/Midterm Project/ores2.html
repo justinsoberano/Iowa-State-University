@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.108.0">
+    <title>H&M - Walmart2714</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/product/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+
+    <script src = "./index.js"></script> <!-- Javascript used for the whole page -->
+    <link href="./styles/style.css" rel="stylesheet"> <!-- Stylesheet used for the whole page -->
+
+</head>
+
+<body>
+    <!-- NavBar starts here -->
+    <a href="./index.html"> <!-- Logo with link that takes you back to index.html -->
+        <img src="./images/nav.png" alt="logo" class="overflow">
+        <!-- This is seperate from the NavBar to allow the "overflow" effect -->
+    </a>
+    <nav class="navbar navbar-expand-lg darkmode"> <!-- Actual NavBar in dark mode -->
+        <button class="navbar-toggler navmenu" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Button tag allows the contents of the NavBar to collapse when it reaches a certain 'vh' size. Provided by BootStrap. -->
+        <!-- THIS REQUIRES JAVASCRIPT <script> WHICH IS PROVIDED BY BOOTSTRAP -->
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link navtext nav minecraftregular" href="./ores.html">Ores</a>
+                <a class="nav-item nav-link navtext nav minecraftregular" href="./ores2.html">More Ores</a>
+            </div>
+        </div>
+    </nav>
+    <!-- NavBar ends here -->
+
+    <!-- Catalog starts here -->
+    <main>
+        <section class="py-5">
+            <p class="text-center minecraftregular" style="font-size: 3vw; margin-top: 1vw; color: white">Learn about Minecraft Ores</p>
+            <p class="text-center minecraftregular" style="font-size: 2vw; margin-top: -1.5vw; color: white">Located deep in the caves</p>            
+            <p style="text-align: center;"></p>
+            <br><br>
+            <p class="text-center minecraftregular" style="font-size: 2vw; margin-top: -1.5vw; color: white">==---------------== The Ores ==--------------==</p>
+            <div class="px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="col mb-5">
+                        <div class="card h-90">
+                            <div id="block3"> </div>
+
+                            <div id="myData">
+                                <div id="myProduct"></div>
+                            </div>
+                            
+                            <script type="text/javascript">
+                                fetch('./data.json')
+                                .then(function (response) {
+                                    return response.json();
+                                })
+                                .then(function (data) {
+                                    appendData(data);
+                                })
+                                .catch(function (err) {
+                                    console.log('error:' + err);
+                                })
+                                
+                                function appendData(data){
+                                    let mainContainer = document.getElementById("myData");
+                                    for (let productName in data) {
+                                        let div = document.createElement("div");
+                                        div.innerHTML = `<br> <br> <h2> ${productName} </h2>`
+                                        mainContainer.appendChild(div);
+                        
+                                    let mainContainer2 = document.getElementById("myProduct");
+                                    for (let element of data[productName]) {
+                                        console.log(element);
+                                        let div2 = document.createElement("div");
+                                        div2.innerHTML = `${element["productId"]} : ${element["shortDescription"]} <br>`;
+                                        mainContainer.appendChild(div2);
+                                    }
+                                    }
+                                }
+                                
+                              
+                                
+                                
+                                </script>
+
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 style="font-family: 'minecraftbold';">Green Leather Cap</h5>
+                                    <!-- Product price-->
+                                    <span style="font-family: 'minecraftregular';">10 Iron Nuggets</span>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-90">
+                            <div id="block4"> </div>
+                            <!-- Product image-->
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 style="font-family: 'minecraftbold';">Black Leather Shirt</h5>
+                                    <!-- Product price-->
+                                    <span style="font-family: 'minecraftregular';">20 Iron Nuggets</span>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                        </div>
+                    </div>
+                    <div class="col mb-5">
+                        <div class="card h-90">
+                            <div id="block5"> </div>
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 style="font-family: 'minecraftbold';">Diamond Pants</h5>
+                                    <!-- Product price-->
+                                    <span style="font-family: 'minecraftregular';">4,000 Iron Nuggets // 40 Diamonds</span>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Catalog ends here -->
+
+    <!-- Footer starts here -->
+    <footer>
+        <!-- Image is seperate from div class to allow for the 'overflow' effect-->
+        <div class="container">
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
+                <span class="footertext minecraftregular">Made with love and Herobrine</span>
+            </footer>
+        </div>
+    </footer>
+    <!-- Footer ends here -->
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+{
+    "blocks": [
+        {
+            "blockName": "Diamond Block",
+            "Biome": "Deep Caverns",
+            "Layer": "15 > x",
+            "image": "./images/diamond.jpeg"
+        },
+        {
+            "blockName": "Gold Block",
+            "Biome": "Deep Caverns",
+            "Layer": "80 - 32",
+            "image": "./images/gold.jpeg"
+        }, 
+        {
+            "blockName": "Netherite Block",
+            "Biome": "Nether",
+            "Layer": "8 - 15",
+            "image": "./images/netherite.jpeg"
+        },
+        {
+            "blockName": "Emerald Block",
+            "Biome": "Extreme Hills",
+            "Layer": "All Layers",
+            "image": "./images/emerald.jpeg"
+        },
+        {
+            "blockName": "Iron Block",
+            "Biome": "Caves",
+            "Layer": "All Layers",
+            "image": "./images/iron.jpeg"
+        },
+        {
+            "blockName": "Coal Block",
+            "Biome": "Caves",
+            "Layer": "0 < x",
+            "image": "./images/coal.jpeg"
+        }
+    ]
+}
