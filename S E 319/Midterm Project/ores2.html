@@ -111,52 +111,11 @@
                     <div class="col mb-5">
                         <div class="card h-90">
                             <div id="block3"> </div>
-
-                            <div id="myData">
-                                <div id="myProduct"></div>
-                            </div>
-                            
-                            <script type="text/javascript">
-                                fetch('./data.json')
-                                .then(function (response) {
-                                    return response.json();
-                                })
-                                .then(function (data) {
-                                    appendData(data);
-                                })
-                                .catch(function (err) {
-                                    console.log('error:' + err);
-                                })
-                                
-                                function appendData(data){
-                                    let mainContainer = document.getElementById("myData");
-                                    for (let productName in data) {
-                                        let div = document.createElement("div");
-                                        div.innerHTML = `<br> <br> <h2> ${productName} </h2>`
-                                        mainContainer.appendChild(div);
-                        
-                                    let mainContainer2 = document.getElementById("myProduct");
-                                    for (let element of data[productName]) {
-                                        console.log(element);
-                                        let div2 = document.createElement("div");
-                                        div2.innerHTML = `${element["productId"]} : ${element["shortDescription"]} <br>`;
-                                        mainContainer.appendChild(div2);
-                                    }
-                                    }
-                                }
-                                
-                              
-                                
-                                
-                                </script>
-
+                   
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 style="font-family: 'minecraftbold';">Green Leather Cap</h5>
-                                    <!-- Product price-->
-                                    <span style="font-family: 'minecraftregular';">10 Iron Nuggets</span>
+                                    <div id="blockText3"></div>
                                 </div>
                             </div>
                             <!-- Product actions-->
@@ -169,10 +128,8 @@
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 style="font-family: 'minecraftbold';">Black Leather Shirt</h5>
+                                    <div id="blockText4"></div>
                                     <!-- Product price-->
-                                    <span style="font-family: 'minecraftregular';">20 Iron Nuggets</span>
                                 </div>
                             </div>
                             <!-- Product actions-->
@@ -184,10 +141,9 @@
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
+                                    <div id="blockText5"></div>
                                     <!-- Product name-->
-                                    <h5 style="font-family: 'minecraftbold';">Diamond Pants</h5>
                                     <!-- Product price-->
-                                    <span style="font-family: 'minecraftregular';">4,000 Iron Nuggets // 40 Diamonds</span>
                                 </div>
                             </div>
                             <!-- Product actions-->
